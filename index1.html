@@ -1,0 +1,2581 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecycleHub - Biến Rác Thành Giá Trị | Thu Mua Rác Thải Nhựa</title>
+    <meta name="description" content="RecycleHub - Nền tảng thu mua rác thải nhựa thông minh, bảo vệ môi trường và tạo thu nhập cho cộng đồng. Đăng ký ngay để tham gia!">
+    <meta name="keywords" content="thu mua rác thải, tái chế nhựa, bảo vệ môi trường, thu nhập phụ, RecycleHub">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #388e3c;
+            --accent-color: #ffeb3b;
+            --text-color: #333;
+            --bg-color: #f8fdf8;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+            width: 100%;
+        }
+
+        header.scrolled .header-container {
+            padding: 0.5rem 2rem;
+        }
+
+        header.scrolled {
+            background: rgba(46, 125, 50, 0.95);
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            min-width: 150px;
+            max-width: 200px;
+        }
+
+        header h1 i {
+            color: var(--accent-color);
+        }
+
+        .main-nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 0;
+            max-width: 600px;
+            margin: 0 2rem;
+        }
+        
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .main-nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 25px;
+            transition: var(--transition);
+            position: relative;
+            display: inline-block;
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+        
+        .main-nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            min-width: 200px;
+            max-width: 250px;
+            justify-content: flex-end;
+            margin-left: 50px;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--white);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+
+        /* Auth Buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            position: relative;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .btn-login,
+        .btn-register {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--white);
+            border-radius: 25px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            min-width: 80px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .btn-login::before,
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover::before,
+        .btn-register:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:hover {
+            background: var(--white);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-register {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(255, 235, 59, 0.3);
+        }
+
+        .btn-register:hover {
+            background: #fdd835;
+            border-color: #fdd835;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(253, 216, 53, 0.4);
+        }
+
+        /* User Menu */
+        .user-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-info:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-info i:first-child {
+            font-size: 1.5rem;
+        }
+
+        .user-info span {
+            font-weight: 500;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .user-menu:hover .user-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .user-dropdown a:hover {
+            background: #f8f9fa;
+            color: var(--primary-color);
+        }
+
+        .user-dropdown i {
+            width: 16px;
+            text-align: center;
+        }
+        
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #e0f2f1 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: #555;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        .hero img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            margin-top: 2rem;
+            transition: var(--transition);
+        }
+
+        .hero img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Hero CTA Buttons */
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero-primary,
+        .btn-hero-secondary {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 200px;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-hero-primary {
+            background: linear-gradient(135deg, var(--accent-color), #fdd835);
+            color: var(--primary-color);
+        }
+
+        .btn-hero-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-hero-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 235, 59, 0.4);
+        }
+
+        .btn-hero-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 3px solid var(--primary-color);
+        }
+
+        .btn-hero-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-hero-secondary:hover::before {
+            width: 100%;
+        }
+
+        .btn-hero-secondary:hover {
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-hero-primary i,
+        .btn-hero-secondary i {
+            font-size: 1.2rem;
+        }
+        
+        section {
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            border-radius: 2px;
+        }
+        
+        .benefits,
+        .items,
+        .process {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(46, 125, 50, 0.1);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Pricing Table */
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-header h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .cta {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 4rem 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-primary,
+        .btn-cta-secondary {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 200px;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cta-primary {
+            background: linear-gradient(135deg, var(--accent-color), #fdd835);
+            color: var(--primary-color);
+        }
+
+        .btn-cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 235, 59, 0.4);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 3px solid var(--white);
+        }
+
+        .btn-cta-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--white);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-cta-secondary:hover::before {
+            width: 100%;
+        }
+
+        .btn-cta-secondary:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-cta-primary i,
+        .btn-cta-secondary i {
+            font-size: 1.2rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform-origin: center center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="modalPattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23modalPattern)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .modal-header i {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+        }
+
+        .close {
+            color: var(--white);
+            font-size: 2.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2.5rem;
+            background: var(--white);
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .form-group label::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 4px;
+            height: 4px;
+            background: #ff4444;
+            border-radius: 50%;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .form-group label.required::after {
+            opacity: 1;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid #e8f0fe;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: #c8d6e5;
+            background: var(--white);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #a0aec0;
+            font-style: italic;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit.loading {
+            color: transparent;
+        }
+
+        .btn-submit.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Auth Switch */
+        .auth-switch {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .auth-switch a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .auth-switch a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        /* Checkbox Styling */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            position: relative;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkmark {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Dashboard Modal */
+        .dashboard-modal {
+            max-width: 800px;
+        }
+
+        .dashboard-content {
+            padding: 1rem 0;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: var(--border-radius);
+        }
+
+        .welcome-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .welcome-section p {
+            color: #666;
+            margin: 0;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .stat-info h5 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0 0 0.25rem 0;
+        }
+
+        .stat-info p {
+            color: #666;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .action-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Alert Animations */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem 1rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Mobile Navigation - Hidden by default */
+        .mobile-nav {
+            display: none;
+        }
+
+        /* Ensure proper spacing for navigation */
+        @media (min-width: 769px) and (max-width: 1023px) {
+            .main-nav {
+                margin: 0 1rem;
+                max-width: 500px;
+            }
+            
+            .main-nav ul {
+                gap: 0.8rem;
+            }
+            
+            .main-nav ul li a {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .header-actions {
+                min-width: 180px;
+                max-width: 220px;
+                margin-left: 30px;
+            }
+            
+            .btn-login,
+            .btn-register {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
+                min-width: 70px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .main-nav {
+                margin: 0 2rem;
+                max-width: 600px;
+            }
+            
+            .main-nav ul {
+                gap: 1rem;
+            }
+            
+            .main-nav ul li a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .header-actions {
+                margin-left: 50px;
+            }
+            
+            .btn-login,
+            .btn-register {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: 80px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .main-nav {
+                margin: 0 3rem;
+                max-width: 700px;
+            }
+            
+            .main-nav ul {
+                gap: 1.2rem;
+            }
+            
+            .main-nav ul li a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .header-actions {
+                margin-left: 60px;
+            }
+            
+            .btn-login,
+            .btn-register {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+                min-width: 90px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0.8rem 1rem;
+                gap: 1rem;
+            }
+
+            .main-nav {
+                display: none;
+            }
+
+            .header-actions {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .user-menu {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: block;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-color);
+                padding: 1.5rem;
+                box-shadow: var(--shadow);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+            }
+
+            .mobile-nav.active {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .mobile-nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .mobile-nav ul li a {
+                color: var(--white);
+                text-decoration: none;
+                font-weight: 500;
+                padding: 0.8rem 1rem;
+                border-radius: 8px;
+                display: block;
+                transition: var(--transition);
+            }
+
+            .mobile-nav ul li a:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .mobile-auth-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .mobile-auth-buttons .btn-login,
+            .mobile-auth-buttons .btn-register {
+                width: 100%;
+                justify-content: center;
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .btn-hero-primary,
+            .btn-hero-secondary {
+                min-width: 250px;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .btn-cta-primary,
+            .btn-cta-secondary {
+                min-width: 250px;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .stat-item {
+                min-width: 120px;
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .benefits,
+            .items,
+            .process {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .cta {
+                margin: 1rem;
+                padding: 3rem 1.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                max-width: 400px;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.9rem 1rem;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+
+            .btn-submit {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0.8rem 1rem;
+            }
+
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .cta {
+                margin: 0.5rem;
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <div class="header-container">
+            <h1><i class="fas fa-recycle"></i> RecycleHub</h1>
+            <nav class="main-nav">
+                <ul id="nav-menu">
+                <li><a href="#hero">Trang chủ</a></li>
+                <li><a href="#benefits">Lợi ích</a></li>
+                <li><a href="#items">Thu mua</a></li>
+                <li><a href="#process">Quy trình</a></li>
+                    <li><a href="#pricing">Bảng giá</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+        </nav>
+            <div class="header-actions">
+                <div class="auth-buttons" id="auth-buttons">
+                    <button type="button" class="btn-login" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Đăng nhập
+                    </button>
+                    <button type="button" class="btn-register" id="registerBtnNav">
+                        <i class="fas fa-user-plus"></i>
+                        Đăng ký
+                    </button>
+                </div>
+                <div class="user-menu" id="user-menu" style="display: none;">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-name">Tên người dùng</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="user-dropdown">
+                        <a href="#" id="dashboardLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="#" id="profileLink"><i class="fas fa-user"></i> Hồ sơ</a>
+                        <a href="#" id="ordersLink"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+                        <a href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                    </div>
+                </div>
+                <div class="mobile-menu" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobile-nav">
+            <ul>
+                <li><a href="#hero">Trang chủ</a></li>
+                <li><a href="#benefits">Lợi ích</a></li>
+                <li><a href="#items">Thu mua</a></li>
+                <li><a href="#process">Quy trình</a></li>
+                <li><a href="#pricing">Bảng giá</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+            <div class="mobile-auth-buttons">
+                <button type="button" class="btn-login" id="mobileLoginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng nhập
+                </button>
+                <button type="button" class="btn-register" id="mobileRegisterBtn">
+                    <i class="fas fa-user-plus"></i>
+                    Đăng ký
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section id="hero" class="hero fade-in">
+                            <div class="hero-content">
+            <h2>Thu Mua Rác Thải Nhựa – Biến Rác Thành Tiền</h2>
+                <p>RecycleHub – Giải pháp tái chế nhựa thông minh, thân thiện môi trường và mang lại giá trị cho cộng đồng. Tham gia cùng chúng tôi để xây dựng tương lai xanh bền vững!</p>
+
+                <div class="hero-cta">
+                    <button type="button" class="btn-hero-primary" id="heroRegisterBtn">
+                        <i class="fas fa-rocket"></i>
+                        Bắt đầu ngay
+                    </button>
+                    <button type="button" class="btn-hero-secondary" id="heroLoginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Đã có tài khoản?
+                    </button>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item scale-in">
+                        <span class="stat-number" data-target="10000">0</span>
+                        <span class="stat-label">Kg rác đã tái chế</span>
+                    </div>
+                    <div class="stat-item scale-in">
+                        <span class="stat-number" data-target="500">0</span>
+                        <span class="stat-label">Người dùng tham gia</span>
+                    </div>
+                    <div class="stat-item scale-in">
+                        <span class="stat-number" data-target="50">0</span>
+                        <span class="stat-label">Tỷ VNĐ đã trả</span>
+                    </div>
+                </div>
+
+            <img src="https://via.placeholder.com/1200x500?text=RecycleHub+Demo" alt="RecycleHub demo">
+            </div>
+        </section>
+
+        <!-- Benefits -->
+        <section id="benefits" class="fade-in">
+            <div class="container">
+            <h2 class="section-title">Lợi Ích Khi Tham Gia</h2>
+            <div class="benefits">
+                    <div class="card slide-in-left">
+                        <i class="fas fa-leaf"></i>
+                    <h3>Bảo vệ môi trường</h3>
+                        <p>Giảm thiểu ô nhiễm nhựa, bảo vệ hệ sinh thái xanh. Mỗi kg rác tái chế giúp tiết kiệm 2.5kg CO2.</p>
+                </div>
+                    <div class="card fade-in">
+                        <i class="fas fa-dollar-sign"></i>
+                    <h3>Tăng thu nhập</h3>
+                        <p>Biến rác thải nhựa thành nguồn thu nhập phụ cho gia đình. Thu nhập trung bình 500.000-2.000.000 VNĐ/tháng.</p>
+                </div>
+                    <div class="card slide-in-right">
+                        <i class="fas fa-users"></i>
+                    <h3>Kết nối cộng đồng</h3>
+                        <p>Xây dựng lối sống xanh, văn minh cùng RecycleHub. Tham gia cộng đồng 500+ thành viên tích cực.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Items -->
+        <section id="items" class="fade-in">
+            <div class="container">
+            <h2 class="section-title">Các Loại Nhựa Thu Mua</h2>
+            <div class="items">
+                    <div class="card scale-in">
+                        <i class="fas fa-wine-bottle"></i>
+                    <h3>Chai PET</h3>
+                        <p>Chai nước suối, nước ngọt, dầu ăn... Giá thu mua: 8.000-12.000 VNĐ/kg</p>
+                </div>
+                    <div class="card scale-in">
+                        <i class="fas fa-shopping-bag"></i>
+                    <h3>Túi nhựa</h3>
+                        <p>Túi nilon sạch, có thể tái chế. Giá thu mua: 3.000-5.000 VNĐ/kg</p>
+                </div>
+                    <div class="card scale-in">
+                        <i class="fas fa-box"></i>
+                    <h3>Hộp nhựa</h3>
+                        <p>Hộp thực phẩm, nhựa PP, HDPE... Giá thu mua: 5.000-8.000 VNĐ/kg</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process -->
+        <section id="process" class="fade-in">
+            <div class="container">
+            <h2 class="section-title">Quy Trình Thu Mua</h2>
+            <div class="process">
+                    <div class="card slide-in-left">
+                        <i class="fas fa-user-plus"></i>
+                    <h3>1. Đăng ký</h3>
+                        <p>Người dùng đăng ký tài khoản trên hệ thống RecycleHub. Chỉ cần 2 phút để hoàn thành.</p>
+                </div>
+                    <div class="card fade-in">
+                        <i class="fas fa-calendar-alt"></i>
+                    <h3>2. Đặt lịch</h3>
+                        <p>Chọn thời gian và địa điểm để nhân viên đến thu gom. Linh hoạt 24/7.</p>
+                </div>
+                    <div class="card fade-in">
+                        <i class="fas fa-weight-hanging"></i>
+                        <h3>3. Cân &amp; Định giá</h3>
+                        <p>Rác thải nhựa được cân và định giá minh bạch. Công khai bảng giá.</p>
+                </div>
+                    <div class="card slide-in-right">
+                        <i class="fas fa-credit-card"></i>
+                    <h3>4. Thanh toán</h3>
+                        <p>Người dùng nhận tiền mặt hoặc cộng vào ví điện tử. Thanh toán ngay lập tức.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing" class="fade-in">
+            <div class="container">
+                <h2 class="section-title">Bảng Giá Thu Mua</h2>
+                <div class="pricing-table">
+                    <div class="pricing-card scale-in">
+                        <div class="pricing-header">
+                            <h3>Chai PET</h3>
+                            <div class="price">8.000 - 12.000 VNĐ/kg</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Chai nước suối</li>
+                            <li><i class="fas fa-check"></i> Chai nước ngọt</li>
+                            <li><i class="fas fa-check"></i> Chai dầu ăn</li>
+                            <li><i class="fas fa-check"></i> Chai nước rửa chén</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card scale-in featured">
+                        <div class="pricing-badge">Phổ biến</div>
+                        <div class="pricing-header">
+                            <h3>Túi nhựa</h3>
+                            <div class="price">3.000 - 5.000 VNĐ/kg</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Túi nilon sạch</li>
+                            <li><i class="fas fa-check"></i> Túi mua sắm</li>
+                            <li><i class="fas fa-check"></i> Túi đựng thực phẩm</li>
+                            <li><i class="fas fa-check"></i> Túi đựng rác</li>
+                        </ul>
+                    </div>
+                    <div class="pricing-card scale-in">
+                        <div class="pricing-header">
+                            <h3>Hộp nhựa</h3>
+                            <div class="price">5.000 - 8.000 VNĐ/kg</div>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check"></i> Hộp thực phẩm</li>
+                            <li><i class="fas fa-check"></i> Nhựa PP</li>
+                            <li><i class="fas fa-check"></i> Nhựa HDPE</li>
+                            <li><i class="fas fa-check"></i> Hộp đựng đồ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA -->
+        <section class="cta fade-in" id="contact">
+            <div class="cta-content">
+            <h2>Hãy tham gia RecycleHub ngay hôm nay!</h2>
+                <p>Cùng nhau chung tay xây dựng Việt Nam xanh, sạch, đẹp. Bắt đầu kiếm tiền từ rác thải nhựa ngay hôm nay!</p>
+                <div class="cta-buttons">
+                    <button type="button" class="btn-cta-primary" id="ctaRegisterBtn">
+                        <i class="fas fa-user-plus"></i>
+                        Đăng ký miễn phí
+                    </button>
+                    <button type="button" class="btn-cta-secondary" id="ctaLoginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Đăng nhập
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-recycle"></i> RecycleHub</h4>
+                <p>Nền tảng thu mua rác thải nhựa thông minh, góp phần bảo vệ môi trường và tạo thu nhập cho cộng đồng.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Liên kết nhanh</h4>
+                <p><a href="#hero">Trang chủ</a></p>
+                <p><a href="#benefits">Lợi ích</a></p>
+                <p><a href="#items">Thu mua</a></p>
+                <p><a href="#process">Quy trình</a></p>
+                <p><a href="#pricing">Bảng giá</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Thông tin liên hệ</h4>
+                <p><i class="fas fa-phone"></i> 1900 1234</p>
+                <p><i class="fas fa-envelope"></i> info@recyclehub.vn</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận 1, TP.HCM</p>
+            </div>
+            <div class="footer-section">
+                <h4>Giờ hoạt động</h4>
+                <p>Thứ 2 - Thứ 6: 8:00 - 18:00</p>
+                <p>Thứ 7: 8:00 - 12:00</p>
+                <p>Chủ nhật: Nghỉ</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 RecycleHub. All rights reserved. | Thiết kế bởi RecycleHub Team</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-sign-in-alt"></i> Đăng nhập tài khoản</h3>
+                <span class="close" data-modal="loginModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="required">Email hoặc Số điện thoại</label>
+                        <input type="text" id="loginEmail" name="loginEmail" placeholder="Nhập email hoặc số điện thoại" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" class="required">Mật khẩu</label>
+                        <input type="password" id="loginPassword" name="loginPassword" placeholder="Nhập mật khẩu" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <span class="checkmark"></span>
+                            Ghi nhớ đăng nhập
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">Đăng nhập</button>
+                    <div class="auth-switch">
+                        <p>Chưa có tài khoản? <a href="#" id="switchToRegister">Đăng ký ngay</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Đăng ký tham gia RecycleHub</h3>
+                <span class="close" data-modal="registerModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="fullName" class="required">Họ và tên</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Nhập họ và tên đầy đủ" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="required">Số điện thoại</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="required">Mật khẩu</label>
+                        <input type="password" id="password" name="password" placeholder="Tối thiểu 6 ký tự" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="required">Xác nhận mật khẩu</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="required">Địa chỉ</label>
+                        <textarea id="address" name="address" placeholder="Nhập địa chỉ chi tiết" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="plasticType">Loại nhựa chính bạn muốn bán</label>
+                        <select id="plasticType" name="plasticType">
+                            <option value="">Chọn loại nhựa</option>
+                            <option value="pet">Chai PET</option>
+                            <option value="bag">Túi nhựa</option>
+                            <option value="box">Hộp nhựa</option>
+                            <option value="all">Tất cả các loại</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="agreeTerms" name="agreeTerms" required>
+                            <span class="checkmark"></span>
+                            Tôi đồng ý với <a href="#" target="_blank">Điều khoản sử dụng</a> và <a href="#" target="_blank">Chính sách bảo mật</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">Đăng ký ngay</button>
+                    <div class="auth-switch">
+                        <p>Đã có tài khoản? <a href="#" id="switchToLogin">Đăng nhập ngay</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Dashboard Modal -->
+    <div id="dashboardModal" class="modal">
+        <div class="modal-content dashboard-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-tachometer-alt"></i> Dashboard</h3>
+                <span class="close" data-modal="dashboardModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="dashboard-content">
+                    <div class="welcome-section">
+                        <h4>Chào mừng, <span id="dashboardUserName">Tên người dùng</span>!</h4>
+                        <p>Quản lý tài khoản và theo dõi hoạt động của bạn tại RecycleHub</p>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-recycle"></i>
+                            <div class="stat-info">
+                                <h5>0</h5>
+                                <p>Kg đã bán</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-dollar-sign"></i>
+                            <div class="stat-info">
+                                <h5>0 VNĐ</h5>
+                                <p>Tổng thu nhập</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-shopping-cart"></i>
+                            <div class="stat-info">
+                                <h5>0</h5>
+                                <p>Đơn hàng</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-actions">
+                        <button type="button" class="action-btn" id="createOrderBtn">
+                            <i class="fas fa-plus"></i>
+                            Tạo đơn hàng mới
+                        </button>
+                        <button type="button" class="action-btn" id="viewOrdersBtn">
+                            <i class="fas fa-list"></i>
+                            Xem đơn hàng
+                        </button>
+                        <button type="button" class="action-btn" id="editProfileBtn">
+                            <i class="fas fa-user-edit"></i>
+                            Chỉnh sửa hồ sơ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start).toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            }
+            updateCounter();
+        }
+
+        // Stats counter observer
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumber = entry.target.querySelector('.stat-number');
+                    const target = parseInt(statNumber.getAttribute('data-target'));
+                    animateCounter(statNumber, target);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item').forEach(item => {
+            statsObserver.observe(item);
+        });
+
+        // Authentication System
+        class AuthSystem {
+            constructor() {
+                this.currentUser = null;
+                this.users = JSON.parse(localStorage.getItem('recyclehub_users')) || [];
+                this.init();
+            }
+
+            init() {
+                this.checkLoginStatus();
+                this.bindEvents();
+            }
+
+            checkLoginStatus() {
+                const userData = localStorage.getItem('recyclehub_current_user');
+                if (userData) {
+                    this.currentUser = JSON.parse(userData);
+                    this.updateUI();
+                }
+            }
+
+            bindEvents() {
+                // Wait for elements to be available
+                const bindElement = (id, event, handler) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener(event, handler);
+                    } else {
+                        console.warn(`Element with id '${id}' not found`);
+                    }
+                };
+
+                // Modal controls
+                bindElement('loginBtn', 'click', () => this.openModal('loginModal'));
+                bindElement('registerBtnNav', 'click', () => this.openModal('registerModal'));
+                bindElement('registerBtn', 'click', () => this.openModal('registerModal'));
+                
+                // Hero CTA buttons
+                bindElement('heroRegisterBtn', 'click', () => this.openModal('registerModal'));
+                bindElement('heroLoginBtn', 'click', () => this.openModal('loginModal'));
+                
+                // CTA section buttons
+                bindElement('ctaRegisterBtn', 'click', () => this.openModal('registerModal'));
+                bindElement('ctaLoginBtn', 'click', () => this.openModal('loginModal'));
+                
+                // Mobile auth buttons
+                bindElement('mobileLoginBtn', 'click', () => {
+                    this.openModal('loginModal');
+                    mobileNav.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+                bindElement('mobileRegisterBtn', 'click', () => {
+                    this.openModal('registerModal');
+                    mobileNav.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+
+                // Close modals
+                document.querySelectorAll('.close').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const modalId = e.target.getAttribute('data-modal');
+                        this.closeModal(modalId);
+                    });
+                });
+
+                // Switch between login/register
+                bindElement('switchToRegister', 'click', (e) => {
+                    e.preventDefault();
+                    this.closeModal('loginModal');
+                    setTimeout(() => this.openModal('registerModal'), 300);
+                });
+
+                bindElement('switchToLogin', 'click', (e) => {
+                    e.preventDefault();
+                    this.closeModal('registerModal');
+                    setTimeout(() => this.openModal('loginModal'), 300);
+                });
+
+                // Form submissions
+                bindElement('loginForm', 'submit', (e) => this.handleLogin(e));
+                bindElement('registerForm', 'submit', (e) => this.handleRegister(e));
+
+                // Dashboard actions
+                bindElement('dashboardLink', 'click', (e) => {
+                    e.preventDefault();
+                    this.openModal('dashboardModal');
+                });
+
+                bindElement('logoutLink', 'click', (e) => {
+                    e.preventDefault();
+                    this.logout();
+                });
+
+                // Close modals when clicking outside
+                window.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        this.closeModal(e.target.id);
+                    }
+                });
+            }
+
+            openModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (!modal) {
+                    console.error(`Modal with id '${modalId}' not found`);
+                    return;
+                }
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                
+                // Focus first input
+                const firstInput = modal.querySelector('input');
+                if (firstInput) {
+                    setTimeout(() => firstInput.focus(), 100);
+                }
+
+                // Debug: Check if form exists
+                const form = modal.querySelector('form');
+                if (form) {
+                    console.log(`Form found in ${modalId}:`, form.id);
+                } else {
+                    console.warn(`No form found in ${modalId}`);
+                }
+            }
+
+            closeModal(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            async handleLogin(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                const submitBtn = e.target.querySelector('.btn-submit');
+
+                // Show loading state
+                this.setLoadingState(submitBtn, true);
+
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 1000));
+
+                // Validate
+                if (!data.loginEmail || !data.loginPassword) {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert('Vui lòng điền đầy đủ thông tin!', 'error');
+                    return;
+                }
+
+                // Find user
+                const user = this.users.find(u => 
+                    (u.email === data.loginEmail || u.phone === data.loginEmail) && 
+                    u.password === data.password
+                );
+
+                if (user) {
+                    this.currentUser = user;
+                    localStorage.setItem('recyclehub_current_user', JSON.stringify(user));
+                    this.updateUI();
+                    this.setLoadingState(submitBtn, false);
+                    this.closeModal('loginModal');
+                    this.showAlert('Đăng nhập thành công!', 'success');
+                } else {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert('Email/số điện thoại hoặc mật khẩu không đúng!', 'error');
+                }
+            }
+
+            async handleRegister(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                const submitBtn = e.target.querySelector('.btn-submit');
+
+                // Show loading state
+                this.setLoadingState(submitBtn, true);
+
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 1500));
+
+                // Validate
+                if (!data.fullName || !data.phone || !data.email || !data.password || !data.confirmPassword || !data.address) {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert('Vui lòng điền đầy đủ thông tin bắt buộc!', 'error');
+                    return;
+                }
+
+                if (data.password !== data.confirmPassword) {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert('Mật khẩu xác nhận không khớp!', 'error');
+                    return;
+                }
+
+                if (data.password.length < 6) {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert('Mật khẩu phải có ít nhất 6 ký tự!', 'error');
+                    return;
+                }
+
+                if (!data.agreeTerms) {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert('Vui lòng đồng ý với điều khoản sử dụng!', 'error');
+                    return;
+                }
+
+                // Check if user exists
+                const existingUser = this.users.find(u => u.email === data.email || u.phone === data.phone);
+                if (existingUser) {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert('Email hoặc số điện thoại đã được sử dụng!', 'error');
+                    return;
+                }
+
+                // Create new user
+                const newUser = {
+                    id: Date.now().toString(),
+                    fullName: data.fullName,
+                    phone: data.phone,
+                    email: data.email,
+                    password: data.password,
+                    address: data.address,
+                    plasticType: data.plasticType,
+                    createdAt: new Date().toISOString(),
+                    stats: {
+                        totalKg: 0,
+                        totalEarnings: 0,
+                        totalOrders: 0
+                    }
+                };
+
+                this.users.push(newUser);
+                localStorage.setItem('recyclehub_users', JSON.stringify(this.users));
+
+                this.currentUser = newUser;
+                localStorage.setItem('recyclehub_current_user', JSON.stringify(newUser));
+                this.updateUI();
+                this.setLoadingState(submitBtn, false);
+                this.closeModal('registerModal');
+                this.showAlert('Đăng ký thành công! Chào mừng bạn đến với RecycleHub!', 'success');
+            }
+
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('recyclehub_current_user');
+                this.updateUI();
+                this.showAlert('Đã đăng xuất thành công!', 'success');
+            }
+
+            updateUI() {
+                const authButtons = document.getElementById('auth-buttons');
+                const userMenu = document.getElementById('user-menu');
+                const userName = document.getElementById('user-name');
+                const dashboardUserName = document.getElementById('dashboardUserName');
+
+                if (this.currentUser) {
+                    authButtons.style.display = 'none';
+                    userMenu.style.display = 'flex';
+                    userName.textContent = this.currentUser.fullName;
+                    if (dashboardUserName) {
+                        dashboardUserName.textContent = this.currentUser.fullName;
+                    }
+                } else {
+                    authButtons.style.display = 'flex';
+                    userMenu.style.display = 'none';
+                }
+            }
+
+            setLoadingState(button, isLoading) {
+                if (isLoading) {
+                    button.disabled = true;
+                    button.classList.add('loading');
+                    button.setAttribute('data-original-text', button.textContent);
+                    button.textContent = 'Đang xử lý...';
+                } else {
+                    button.disabled = false;
+                    button.classList.remove('loading');
+                    button.textContent = button.getAttribute('data-original-text') || 'Submit';
+                }
+            }
+
+            showAlert(message, type = 'info') {
+                // Create alert element
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                `;
+
+                // Add styles
+                alert.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#d4edda' : type === 'error' ? '#f8d7da' : '#d1ecf1'};
+                    color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#0c5460'};
+                    border: 1px solid ${type === 'success' ? '#c3e6cb' : type === 'error' ? '#f5c6cb' : '#bee5eb'};
+                    border-radius: 8px;
+                    padding: 1rem 1.5rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    z-index: 10000;
+                    animation: slideInRight 0.3s ease;
+                `;
+
+                document.body.appendChild(alert);
+
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    alert.style.animation = 'slideOutRight 0.3s ease';
+                    setTimeout(() => alert.remove(), 300);
+                }, 5000);
+            }
+        }
+
+        // Initialize auth system when DOM is ready
+        let auth;
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            auth = new AuthSystem();
+        });
+
+        // Fallback for immediate execution
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                if (!auth) auth = new AuthSystem();
+            });
+        } else {
+            auth = new AuthSystem();
+        }
+
+        // Direct form event binding as fallback
+        document.addEventListener('DOMContentLoaded', () => {
+            // Direct form submission handlers
+            const registerForm = document.getElementById('registerForm');
+            const loginForm = document.getElementById('loginForm');
+            
+            if (registerForm && !registerForm.hasAttribute('data-bound')) {
+                registerForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    console.log('Register form submitted directly');
+                    if (auth) {
+                        auth.handleRegister(e);
+                    }
+                });
+                registerForm.setAttribute('data-bound', 'true');
+            }
+            
+            if (loginForm && !loginForm.hasAttribute('data-bound')) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    console.log('Login form submitted directly');
+                    if (auth) {
+                        auth.handleLogin(e);
+                    }
+                });
+                loginForm.setAttribute('data-bound', 'true');
+            }
+        });
+
+        // Add loading animation to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add ripple effect to buttons
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', createRipple);
+        });
+
+        // Add CSS for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            button {
+                position: relative;
+                overflow: hidden;
+            }
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+
+</html>

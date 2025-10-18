@@ -1,0 +1,5124 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecycleHub - Biến Rác Thành Giá Trị | Thu Mua Rác Thải Nhựa</title>
+    <meta name="description" content="RecycleHub - Nền tảng thu mua rác thải nhựa thông minh, bảo vệ môi trường và tạo thu nhập cho cộng đồng. Đăng ký ngay để tham gia!">
+    <meta name="keywords" content="thu mua rác thải, tái chế nhựa, bảo vệ môi trường, thu nhập phụ, RecycleHub">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #2e7d32;
+            --secondary-color: #388e3c;
+            --accent-color: #ffeb3b;
+            --text-color: #333;
+            --bg-color: #f8fdf8;
+            --white: #ffffff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 60px;
+            width: 100%;
+        }
+
+        header.scrolled .header-container {
+            padding: 0.5rem 2rem;
+        }
+
+        header.scrolled {
+            background: rgba(46, 125, 50, 0.95);
+        }
+        
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            min-width: 150px;
+            max-width: 200px;
+        }
+
+        header h1 i {
+            color: var(--accent-color);
+        }
+
+        .main-nav {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-width: 0;
+            max-width: 600px;
+            margin: 0 2rem;
+        }
+        
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 1rem;
+            margin: 0;
+            padding: 0;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .main-nav ul li a {
+            color: var(--white);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: 25px;
+            transition: var(--transition);
+            position: relative;
+            display: inline-block;
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+        }
+        
+        .main-nav ul li a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-shrink: 0;
+            min-width: 200px;
+            max-width: 250px;
+            justify-content: flex-end;
+            margin-left: 50px;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: var(--white);
+            margin: 3px 0;
+            transition: var(--transition);
+        }
+
+        /* Auth Buttons */
+        .auth-buttons {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+            position: relative;
+            flex-wrap: nowrap;
+            white-space: nowrap;
+        }
+
+        .btn-login,
+        .btn-register {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--white);
+            border-radius: 25px;
+            background: transparent;
+            color: var(--white);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            min-width: 80px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+
+        .btn-login::before,
+        .btn-register::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-login:hover::before,
+        .btn-register:hover::before {
+            left: 100%;
+        }
+
+        .btn-login:hover {
+            background: var(--white);
+            color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-register {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            border-color: var(--accent-color);
+            box-shadow: 0 4px 15px rgba(255, 235, 59, 0.3);
+        }
+
+        .btn-register:hover {
+            background: #fdd835;
+            border-color: #fdd835;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(253, 216, 53, 0.4);
+        }
+
+        /* User Menu */
+        .user-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-info:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-info i:first-child {
+            font-size: 1.5rem;
+        }
+
+        .user-info span {
+            font-weight: 500;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            z-index: 1000;
+        }
+
+        .user-menu:hover .user-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem 1rem;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .user-dropdown a:last-child {
+            border-bottom: none;
+        }
+
+        .user-dropdown a:hover {
+            background: #f8f9fa;
+            color: var(--primary-color);
+        }
+
+        .user-dropdown i {
+            width: 16px;
+            text-align: center;
+        }
+        
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #e0f2f1 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            color: #555;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            min-width: 150px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+        
+        .hero img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            margin-top: 2rem;
+            transition: var(--transition);
+        }
+
+        .hero img:hover {
+            transform: scale(1.02);
+        }
+
+        /* Hero CTA Buttons */
+        .hero-cta {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin: 2.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .btn-hero-primary,
+        .btn-hero-secondary {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 200px;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-hero-primary {
+            background: linear-gradient(135deg, var(--accent-color), #fdd835);
+            color: var(--primary-color);
+        }
+
+        .btn-hero-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-hero-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 235, 59, 0.4);
+        }
+
+        .btn-hero-secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 3px solid var(--primary-color);
+        }
+
+        .btn-hero-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-hero-secondary:hover::before {
+            width: 100%;
+        }
+
+        .btn-hero-secondary:hover {
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-hero-primary i,
+        .btn-hero-secondary i {
+            font-size: 1.2rem;
+        }
+        
+        section {
+            padding: 5rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+            border-radius: 2px;
+        }
+        
+        .benefits,
+        .items,
+        .process {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(46, 125, 50, 0.1);
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+        
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        
+        .card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        /* Pricing Table */
+        .pricing-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .pricing-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .pricing-card.featured {
+            border-color: var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-header h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pricing-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        .pricing-features i {
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+        
+        .cta {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 4rem 2rem;
+            border-radius: var(--border-radius);
+            margin: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-cta-primary,
+        .btn-cta-secondary {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            min-width: 200px;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-cta-primary {
+            background: linear-gradient(135deg, var(--accent-color), #fdd835);
+            color: var(--primary-color);
+        }
+
+        .btn-cta-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-cta-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 235, 59, 0.4);
+        }
+
+        .btn-cta-secondary {
+            background: transparent;
+            color: var(--white);
+            border: 3px solid var(--white);
+        }
+
+        .btn-cta-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--white);
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+
+        .btn-cta-secondary:hover::before {
+            width: 100%;
+        }
+
+        .btn-cta-secondary:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-cta-primary i,
+        .btn-cta-secondary i {
+            font-size: 1.2rem;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            margin: 3% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            animation: modalSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            transform-origin: center center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="modalPattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23modalPattern)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.6rem;
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .modal-header i {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+        }
+
+        .close {
+            color: var(--white);
+            font-size: 2.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            z-index: 2;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2.5rem;
+            background: var(--white);
+        }
+
+        /* Transaction History Modal Styles */
+        .transaction-filters {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .filter-select {
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #e8f0fe;
+            border-radius: 12px;
+            background: #fafbfc;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: var(--transition);
+            min-width: 200px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(34, 139, 34, 0.1);
+        }
+
+        .transaction-list {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 2rem;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #f8fffe, #f0f9f4);
+            border-radius: 16px;
+            border: 1px solid #e8f5e8;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .transaction-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(34, 139, 34, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .transaction-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .transaction-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .transaction-icon i {
+            color: var(--white);
+            font-size: 1.2rem;
+        }
+
+        .transaction-details {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .transaction-info h4 {
+            margin: 0 0 0.3rem 0;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .transaction-info p {
+            margin: 0 0 0.3rem 0;
+            font-size: 0.9rem;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .transaction-info small {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .transaction-points {
+            font-size: 1.1rem;
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .transaction-points.positive {
+            background: linear-gradient(135deg, #d4edda, #c3e6cb);
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .transaction-points.negative {
+            background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading-spinner, .error-message, .empty-state {
+            text-align: center;
+            padding: 3rem 2rem;
+            color: #666;
+        }
+
+        .loading-spinner i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .error-message i {
+            font-size: 2rem;
+            color: #dc3545;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .transaction-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .page-btn {
+            padding: 0.6rem 1rem;
+            border: 2px solid #e8f0fe;
+            background: var(--white);
+            color: var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            font-weight: 500;
+            min-width: 40px;
+        }
+
+        .page-btn:hover {
+            border-color: var(--primary-color);
+            background: #f0f9f4;
+            transform: translateY(-1px);
+        }
+
+        .page-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            border-color: var(--primary-color);
+        }
+
+        .page-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Vouchers Modal Styles */
+        .vouchers-list {
+            max-height: 500px;
+            overflow-y: auto;
+            margin-bottom: 2rem;
+        }
+
+        .voucher-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff8e1, #fff3c4);
+            border-radius: 16px;
+            border: 2px solid #ffd54f;
+            transition: var(--transition);
+            position: relative;
+            overflow: visible;
+            min-height: 120px;
+        }
+
+        .voucher-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(255, 193, 7, 0.25);
+            border-color: #ffc107;
+        }
+
+        .voucher-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+        }
+
+        .voucher-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .voucher-icon i {
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .voucher-details {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1.5rem;
+            align-items: start;
+        }
+
+        .voucher-info h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e65100;
+        }
+
+        .voucher-info p {
+            margin: 0 0 0.5rem 0;
+            font-size: 0.95rem;
+            color: #bf360c;
+            line-height: 1.4;
+        }
+
+        .voucher-value {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .value-amount {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #e65100;
+            background: rgba(255, 193, 7, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .points-used {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #d84315;
+            background: rgba(255, 87, 34, 0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+        }
+
+        .voucher-info small {
+            color: #8d6e63;
+            font-size: 0.8rem;
+        }
+
+        .voucher-code-section {
+            display: flex;
+            flex-direction: column;
+            align-items: stretch;
+            min-width: 250px;
+            max-width: 300px;
+        }
+
+        .voucher-code {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 1rem 1.2rem;
+            border-radius: 12px;
+            border: 2px solid #ffc107;
+            margin-bottom: 0.5rem;
+            width: 100%;
+            box-sizing: border-box;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #e65100;
+        }
+
+        .code-value {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #d84315;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1px;
+            background: rgba(255, 193, 7, 0.2);
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            min-width: 150px;
+            text-align: center;
+            flex: 1;
+            word-break: break-all;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .copy-btn {
+            background: linear-gradient(135deg, #ffc107, #ff8f00);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .copy-btn:hover {
+            background: linear-gradient(135deg, #ff8f00, #ff6f00);
+            transform: scale(1.05);
+        }
+
+        .copy-btn:active {
+            transform: scale(0.95);
+        }
+
+        .vouchers-pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        /* Add Waste Modal Styles */
+        #addWasteModal .modal-content {
+            width: 90%;
+            max-width: 600px;
+            margin: 5% auto;
+        }
+
+        .waste-form-container {
+            padding: 0;
+        }
+
+        .waste-form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 2rem 0;
+        }
+
+        .waste-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .waste-icon i {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .waste-form-header h4 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.5rem;
+            color: #2e7d32;
+            font-weight: 700;
+        }
+
+        .waste-form-header p {
+            margin: 0;
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .waste-form {
+            padding: 0 2rem 2rem;
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding-right: 3rem;
+        }
+
+        .input-unit {
+            position: absolute;
+            right: 1rem;
+            color: #666;
+            font-weight: 600;
+            pointer-events: none;
+        }
+
+        .input-hint {
+            display: block;
+            margin-top: 0.5rem;
+            color: #888;
+            font-size: 0.85rem;
+        }
+
+        .points-preview {
+            background: linear-gradient(135deg, #e8f5e8, #f1f8e9);
+            border: 2px solid #4caf50;
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .points-preview::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+        }
+
+        .points-preview-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: #2e7d32;
+            font-weight: 600;
+        }
+
+        .points-preview-header i {
+            font-size: 1.2rem;
+        }
+
+        .points-amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .points-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        .breakdown-item:last-child {
+            border-bottom: none;
+        }
+
+        .breakdown-item.bonus {
+            color: #ff9800;
+            font-weight: 600;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn-cancel {
+            background: #f5f5f5;
+            color: #666;
+            border: 2px solid #ddd;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-cancel:hover {
+            background: #e0e0e0;
+            border-color: #bbb;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(135deg, #45a049, #1b5e20);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn-submit:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Vouchers Modal - Larger Size */
+        #vouchersModal .modal-content {
+            width: 95%;
+            max-width: 800px;
+            max-height: 90vh;
+            margin: 2% auto;
+        }
+
+        #vouchersModal .modal-body {
+            max-height: calc(90vh - 120px);
+            overflow-y: auto;
+        }
+
+        /* Responsive design for voucher items */
+        @media (max-width: 768px) {
+            .voucher-item {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 1rem;
+                min-height: auto;
+            }
+
+            .voucher-icon {
+                align-self: center;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+
+            .voucher-details {
+                display: flex;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .voucher-code-section {
+                align-items: stretch;
+                min-width: auto;
+                max-width: none;
+            }
+
+            .voucher-code {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+
+            .code-value {
+                min-width: auto;
+                word-break: break-all;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .voucher-code {
+                padding: 0.8rem;
+            }
+            
+            .code-value {
+                font-size: 0.9rem;
+                padding: 0.4rem 0.6rem;
+            }
+        }
+
+        /* Responsive for vouchers modal */
+        @media (max-width: 768px) {
+            #vouchersModal .modal-content {
+                width: 98%;
+                max-width: 600px;
+                margin: 1% auto;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #vouchersModal .modal-content {
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                border-radius: 0;
+                height: 100vh;
+                max-height: 100vh;
+            }
+
+            #vouchersModal .modal-body {
+                max-height: calc(100vh - 80px);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.8rem;
+            text-align: left;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .form-group label::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 4px;
+            height: 4px;
+            background: #ff4444;
+            border-radius: 50%;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .form-group label.required::after {
+            opacity: 1;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem 1.2rem;
+            border: 2px solid #e8f0fe;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #fafbfc;
+            font-family: 'Poppins', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: var(--white);
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group input:hover,
+        .form-group select:hover,
+        .form-group textarea:hover {
+            border-color: #c8d6e5;
+            background: var(--white);
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: #a0aec0;
+            font-style: italic;
+        }
+
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group select {
+            cursor: pointer;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 0.75rem center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 2.5rem;
+        }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-family: 'Poppins', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(46, 125, 50, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-submit.loading {
+            color: transparent;
+        }
+
+        .btn-submit.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid transparent;
+            border-top: 2px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Auth Switch */
+        .auth-switch {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        .auth-switch a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .auth-switch a:hover {
+            color: var(--secondary-color);
+            text-decoration: underline;
+        }
+
+        /* Checkbox Styling */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            cursor: pointer;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            position: relative;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkmark {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+            content: '';
+            position: absolute;
+            left: 6px;
+            top: 2px;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Dashboard Modal */
+        .dashboard-modal {
+            max-width: 800px;
+        }
+
+        .dashboard-content {
+            padding: 1rem 0;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: var(--border-radius);
+        }
+
+        .welcome-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+        }
+
+        .welcome-section p {
+            color: #666;
+            margin: 0;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .stat-info h5 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0 0 0.25rem 0;
+        }
+
+        .stat-info p {
+            color: #666;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .dashboard-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            color: var(--primary-color);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: left;
+        }
+
+        .action-btn:hover {
+            background: var(--primary-color);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .action-btn i {
+            font-size: 1.2rem;
+        }
+
+        /* Alert Animations */
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOutRight {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            text-align: center;
+            padding: 3rem 2rem 1rem;
+            margin-top: 2rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: var(--accent-color);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .slide-in-left.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .slide-in-right.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Daily Check-in Styles */
+        .checkin-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 3rem;
+        }
+
+        .checkin-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .checkin-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .checkin-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .checkin-header i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .checkin-header h3 {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .checkin-status {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .status-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--primary-color);
+            color: var(--white);
+            font-size: 1.5rem;
+        }
+
+        .status-icon.checked {
+            background: var(--accent-color);
+            color: var(--primary-color);
+        }
+
+        .status-text h4 {
+            color: var(--primary-color);
+            margin: 0 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+
+        .status-text p {
+            color: #666;
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .checkin-rewards {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+            border-radius: 12px;
+        }
+
+        .reward-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        .reward-item i {
+            color: var(--accent-color);
+        }
+
+        .checkin-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--accent-color), #fdd835);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .checkin-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 235, 59, 0.4);
+        }
+
+        .checkin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .checkin-btn.checked {
+            background: #28a745;
+            color: var(--white);
+        }
+
+        .checkin-btn.checked:hover {
+            background: #218838;
+        }
+
+        .checkin-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .checkin-stats .stat-item {
+            text-align: center;
+        }
+
+        .checkin-stats .stat-number {
+            display: block;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .checkin-stats .stat-label {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+
+
+        /* Check-in Animation */
+        @keyframes checkinPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .checkin-btn.animating {
+            animation: checkinPulse 0.6s ease;
+        }
+
+        /* Responsive Design for Check-in */
+        @media (max-width: 768px) {
+            .checkin-container {
+                padding: 0 1rem;
+            }
+
+            .checkin-card {
+                padding: 1.5rem;
+            }
+
+            .checkin-rewards {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .checkin-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Points Calculator Styles */
+        .points-calculator {
+            margin: 3rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .calculator-card {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-hover);
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .calculator-card h3 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .calculator-content {
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--text-color);
+        }
+
+        .points-result {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .points-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+
+        .bonus-info {
+            background: rgba(255, 235, 59, 0.2);
+            padding: 0.8rem;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .bonus-info i {
+            color: var(--accent-color);
+        }
+
+        /* Current Points Display */
+        .current-points {
+            margin: 2rem 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .points-display {
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .points-display i {
+            font-size: 2rem;
+            color: var(--accent-color);
+        }
+
+        .points-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .points-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .points-amount {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* Vouchers Grid */
+        .vouchers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .voucher-card {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 2px solid transparent;
+        }
+
+        .voucher-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .voucher-card.featured {
+            border-color: var(--accent-color);
+            transform: scale(1.02);
+        }
+
+        .voucher-card.featured:hover {
+            transform: scale(1.02) translateY(-10px);
+        }
+
+        .voucher-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .voucher-header i {
+            font-size: 2rem;
+        }
+
+        .voucher-badge {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .voucher-content {
+            padding: 1.5rem;
+        }
+
+        .voucher-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+
+        .voucher-desc {
+            color: #666;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .voucher-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+        }
+
+        .points-required,
+        .validity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .points-required i {
+            color: var(--accent-color);
+        }
+
+        .validity i {
+            color: var(--primary-color);
+        }
+
+        .redeem-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--accent-color), #fdd835);
+            color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .redeem-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 235, 59, 0.3);
+        }
+
+        .redeem-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Redeem Modal Styles */
+        .redeem-confirmation {
+            text-align: center;
+        }
+
+        .voucher-preview {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--white);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+        }
+
+        .voucher-preview i {
+            font-size: 3rem;
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        .voucher-preview h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .voucher-preview p {
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        .points-info {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+        }
+
+        .points-detail {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .points-detail:last-child {
+            border-bottom: none;
+        }
+
+        .points-detail.total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            background: rgba(46, 125, 50, 0.1);
+            margin: 0 -1.5rem;
+            padding: 1rem 1.5rem;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+        }
+
+        .confirmation-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-cancel,
+        .btn-confirm {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-width: 150px;
+            justify-content: center;
+        }
+
+        .btn-cancel {
+            background: #6c757d;
+            color: var(--white);
+        }
+
+        .btn-cancel:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .btn-confirm {
+            background: linear-gradient(135deg, var(--accent-color), #fdd835);
+            color: var(--primary-color);
+        }
+
+        .btn-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 235, 59, 0.3);
+        }
+
+        .btn-confirm:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive Design for Vouchers */
+        @media (max-width: 768px) {
+            .vouchers-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .calculator-card {
+                margin: 0 1rem;
+                padding: 1.5rem;
+            }
+
+            .points-display {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+        }
+
+        /* Mobile Navigation - Hidden by default */
+        .mobile-nav {
+            display: none;
+        }
+
+        /* Ensure proper spacing for navigation */
+        @media (min-width: 769px) and (max-width: 1023px) {
+            .main-nav {
+                margin: 0 1rem;
+                max-width: 500px;
+            }
+            
+            .main-nav ul {
+                gap: 0.8rem;
+            }
+            
+            .main-nav ul li a {
+                padding: 0.4rem 0.6rem;
+                font-size: 0.8rem;
+            }
+            
+            .header-actions {
+                min-width: 180px;
+                max-width: 220px;
+                margin-left: 30px;
+            }
+            
+            .btn-login,
+            .btn-register {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
+                min-width: 70px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .main-nav {
+                margin: 0 2rem;
+                max-width: 600px;
+            }
+            
+            .main-nav ul {
+                gap: 1rem;
+            }
+            
+            .main-nav ul li a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+            }
+            
+            .header-actions {
+                margin-left: 50px;
+            }
+            
+            .btn-login,
+            .btn-register {
+                padding: 0.5rem 1rem;
+                font-size: 0.8rem;
+                min-width: 80px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .main-nav {
+                margin: 0 3rem;
+                max-width: 700px;
+            }
+            
+            .main-nav ul {
+                gap: 1.2rem;
+            }
+            
+            .main-nav ul li a {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .header-actions {
+                margin-left: 60px;
+            }
+            
+            .btn-login,
+            .btn-register {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+                min-width: 90px;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0.8rem 1rem;
+                gap: 1rem;
+            }
+
+            .main-nav {
+                display: none;
+            }
+
+            .header-actions {
+                margin-left: 0;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .user-menu {
+                display: none;
+            }
+
+            .mobile-nav {
+                display: block;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--primary-color);
+                padding: 1.5rem;
+                box-shadow: var(--shadow);
+                z-index: 999;
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: all 0.3s ease;
+            }
+
+            .mobile-nav.active {
+                display: block;
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .mobile-nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .mobile-nav ul li a {
+                color: var(--white);
+                text-decoration: none;
+                font-weight: 500;
+                padding: 0.8rem 1rem;
+                border-radius: 8px;
+                display: block;
+                transition: var(--transition);
+            }
+
+            .mobile-nav ul li a:hover {
+                background: rgba(255, 255, 255, 0.1);
+            }
+
+            .mobile-auth-buttons {
+                display: flex;
+                flex-direction: column;
+                gap: 0.8rem;
+                padding-top: 1rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.2);
+            }
+
+            .mobile-auth-buttons .btn-login,
+            .mobile-auth-buttons .btn-register {
+                width: 100%;
+                justify-content: center;
+                padding: 0.8rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .btn-hero-primary,
+            .btn-hero-secondary {
+                min-width: 250px;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .btn-cta-primary,
+            .btn-cta-secondary {
+                min-width: 250px;
+                padding: 1rem 2rem;
+                font-size: 1rem;
+            }
+
+            .hero-stats {
+                gap: 1.5rem;
+            }
+
+            .stat-item {
+                min-width: 120px;
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .benefits,
+            .items,
+            .process {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .cta {
+                margin: 1rem;
+                padding: 3rem 1.5rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 5% auto;
+                max-width: 400px;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.9rem 1rem;
+                font-size: 16px; /* Prevent zoom on iOS */
+            }
+
+            .btn-submit {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            header {
+                padding: 0.8rem 1rem;
+            }
+
+            .hero {
+                padding: 6rem 1rem 3rem;
+            }
+
+            .hero h2 {
+                font-size: 2rem;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .cta {
+                margin: 0.5rem;
+                padding: 2rem 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header id="header">
+        <div class="header-container">
+            <h1><i class="fas fa-recycle"></i> RecycleHub</h1>
+            <nav class="main-nav">
+                <ul id="nav-menu">
+                <li><a href="#hero">Trang chủ</a></li>
+                <li><a href="#checkin">Điểm danh</a></li>
+                <li><a href="#points">Tích điểm</a></li>
+                <li><a href="#redeem">Đổi điểm</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+        </nav>
+            <div class="header-actions">
+                <div class="auth-buttons" id="auth-buttons">
+                    <button type="button" class="btn-login" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Đăng nhập
+                    </button>
+                    <button type="button" class="btn-register" id="registerBtnNav">
+                        <i class="fas fa-user-plus"></i>
+                        Đăng ký
+                    </button>
+                </div>
+                <div class="user-menu" id="user-menu" style="display: none;">
+                    <div class="user-info">
+                        <i class="fas fa-user-circle"></i>
+                        <span id="user-name">Tên người dùng</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="user-dropdown">
+                        <a href="#" id="dashboardLink"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                        <a href="#" id="profileLink"><i class="fas fa-user"></i> Hồ sơ</a>
+                        <a href="#" id="ordersLink"><i class="fas fa-shopping-cart"></i> Đơn hàng</a>
+                        <a href="#" id="logoutLink"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                    </div>
+                </div>
+                <div class="mobile-menu" id="mobile-menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobile-nav">
+            <ul>
+                <li><a href="#hero">Trang chủ</a></li>
+                <li><a href="#checkin">Điểm danh</a></li>
+                <li><a href="#points">Tích điểm</a></li>
+                <li><a href="#redeem">Đổi điểm</a></li>
+                <li><a href="#contact">Liên hệ</a></li>
+            </ul>
+            <div class="mobile-auth-buttons">
+                <button type="button" class="btn-login" id="mobileLoginBtn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng nhập
+                </button>
+                <button type="button" class="btn-register" id="mobileRegisterBtn">
+                    <i class="fas fa-user-plus"></i>
+                    Đăng ký
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section id="hero" class="hero fade-in">
+                            <div class="hero-content">
+            <h2>Tích Điểm Từ Rác Thải Nhựa – Đổi Lấy Phần Quà Hấp Dẫn</h2>
+                <p>RecycleHub – Hệ thống tích điểm thông minh, biến rác thải nhựa thành điểm thưởng và đổi lấy voucher mua sắm. Tham gia cùng chúng tôi để xây dựng tương lai xanh bền vững!</p>
+
+                <div class="hero-cta">
+                    <button type="button" class="btn-hero-primary" id="heroRegisterBtn">
+                        <i class="fas fa-rocket"></i>
+                        Bắt đầu ngay
+                    </button>
+                    <button type="button" class="btn-hero-secondary" id="heroLoginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Đã có tài khoản?
+                    </button>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="stat-item scale-in">
+                        <span class="stat-number" data-target="100000">0</span>
+                        <span class="stat-label">Điểm đã tích lũy</span>
+                    </div>
+                    <div class="stat-item scale-in">
+                        <span class="stat-number" data-target="500">0</span>
+                        <span class="stat-label">Người dùng tham gia</span>
+                    </div>
+                    <div class="stat-item scale-in">
+                        <span class="stat-number" data-target="1000">0</span>
+                        <span class="stat-label">Voucher đã đổi</span>
+                    </div>
+                </div>
+
+            <img src="https://via.placeholder.com/1200x500?text=RecycleHub+Demo" alt="RecycleHub demo">
+            </div>
+        </section>
+
+        <!-- Daily Check-in Section -->
+        <section id="checkin" class="fade-in">
+            <div class="container">
+                <h2 class="section-title">Điểm Danh Hàng Ngày</h2>
+
+                <div class="checkin-container">
+                    <div class="checkin-card">
+                        <div class="checkin-header">
+                            <i class="fas fa-calendar-check"></i>
+                            <h3>Điểm danh hôm nay</h3>
+                        </div>
+
+                        <div class="checkin-status" id="checkinStatus">
+                            <div class="status-icon">
+                                <i class="fas fa-clock" id="checkinIcon"></i>
+                            </div>
+                            <div class="status-text">
+                                <h4 id="checkinTitle">Chưa điểm danh</h4>
+                                <p id="checkinDesc">Điểm danh để nhận điểm thưởng!</p>
+                            </div>
+                        </div>
+
+                        <div class="checkin-rewards">
+                            <div class="reward-item">
+                                <i class="fas fa-coins"></i>
+                                <span>Ngày thường: <strong>2 điểm</strong></span>
+                            </div>
+                            <div class="reward-item">
+                                <i class="fas fa-star"></i>
+                                <span>Cuối tuần: <strong>5 điểm</strong></span>
+                            </div>
+                        </div>
+
+                        <button type="button" class="checkin-btn" id="dailyCheckinBtn">
+                            <i class="fas fa-hand-paper"></i>
+                            <span>Điểm danh ngay</span>
+                        </button>
+
+                        <div class="checkin-stats">
+                            <div class="stat-item">
+                                <span class="stat-number" id="checkinStreak">0</span>
+                                <span class="stat-label">Ngày liên tiếp</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number" id="totalCheckins">0</span>
+                                <span class="stat-label">Tổng điểm danh</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Points System -->
+        <section id="points" class="fade-in">
+            <div class="container">
+            <h2 class="section-title">Hệ Thống Tích Điểm</h2>
+            <div class="benefits">
+                    <div class="card slide-in-left">
+                        <i class="fas fa-calendar-check"></i>
+                    <h3>Điểm danh hằng ngày</h3>
+                        <p>Mỗi ngày đăng nhập nhận 2 điểm. Cuối tuần (Thứ 7, Chủ nhật) nhận 5 điểm. Tích lũy điểm liên tục để đổi quà!</p>
+                </div>
+                    <div class="card fade-in">
+                        <i class="fas fa-recycle"></i>
+                    <h3>Quy đổi rác thành điểm</h3>
+                        <p>Mỗi 1kg rác = 10 điểm. Từ 10kg trở lên, mỗi kg được +1 điểm bonus. Càng nhiều rác, càng nhiều điểm!</p>
+                </div>
+                    <div class="card slide-in-right">
+                        <i class="fas fa-gift"></i>
+                    <h3>Đổi điểm lấy quà</h3>
+                        <p>Dùng điểm tích lũy để đổi voucher mua sắm, voucher TMĐT và nhiều phần quà hấp dẫn khác!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Redeem Points -->
+        <section id="redeem" class="fade-in">
+            <div class="container">
+                <h2 class="section-title">Đổi Điểm Lấy Quà</h2>
+
+                <!-- Points Calculator -->
+                <div class="points-calculator">
+                    <div class="calculator-card">
+                        <h3><i class="fas fa-calculator"></i> Máy Tính Điểm</h3>
+                        <div class="calculator-content">
+                            <div class="input-group">
+                                <label for="wasteAmount">Số kg rác thải:</label>
+                                <input type="number" id="wasteAmount" min="0" step="0.1" placeholder="Nhập số kg">
+                        </div>
+                            <div class="points-result">
+                                <span class="points-label">Điểm nhận được:</span>
+                                <span class="points-value" id="calculatedPoints">0 điểm</span>
+                    </div>
+                            <div class="bonus-info" id="bonusInfo" style="display: none;">
+                                <i class="fas fa-star"></i>
+                                <span>Bạn nhận được điểm bonus vì có từ 10kg trở lên!</span>
+                        </div>
+                    </div>
+                        </div>
+                </div>
+
+                <!-- Current Points Display -->
+                <div class="current-points">
+                    <div class="points-display">
+                        <i class="fas fa-coins"></i>
+                        <div class="points-info">
+                            <span class="points-label">Điểm hiện tại của bạn:</span>
+                            <span class="points-amount" id="currentPoints">0 điểm</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Vouchers Grid -->
+                <div class="vouchers-grid">
+                    <div class="voucher-card scale-in" data-points="500" data-value="50000">
+                        <div class="voucher-header">
+                            <i class="fas fa-ticket-alt"></i>
+                            <div class="voucher-badge">Phổ biến</div>
+                        </div>
+                        <div class="voucher-content">
+                            <h3>Voucher 50.000đ</h3>
+                            <p class="voucher-desc">Voucher mua sắm tại cửa hàng đối tác</p>
+                            <div class="voucher-details">
+                                <div class="points-required">
+                                    <i class="fas fa-coins"></i>
+                                    <span>500 điểm</span>
+                                </div>
+                                <div class="validity">
+                                    <i class="fas fa-clock"></i>
+                                    <span>30 ngày</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="redeem-btn" onclick="redeemVoucher(500, 50000, 'Voucher 50.000đ')">
+                            <i class="fas fa-gift"></i>
+                            Đổi ngay
+                        </button>
+                    </div>
+
+                    <div class="voucher-card scale-in featured" data-points="1000" data-value="100000">
+                        <div class="voucher-header">
+                            <i class="fas fa-shopping-cart"></i>
+                            <div class="voucher-badge">Khuyến mãi</div>
+                        </div>
+                        <div class="voucher-content">
+                            <h3>Voucher TMĐT 100.000đ</h3>
+                            <p class="voucher-desc">Voucher mua hàng thương mại điện tử</p>
+                            <div class="voucher-details">
+                                <div class="points-required">
+                                    <i class="fas fa-coins"></i>
+                                    <span>1000 điểm</span>
+                                </div>
+                                <div class="validity">
+                                    <i class="fas fa-clock"></i>
+                                    <span>60 ngày</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="redeem-btn" onclick="redeemVoucher(1000, 100000, 'Voucher TMĐT 100.000đ')">
+                            <i class="fas fa-gift"></i>
+                            Đổi ngay
+                        </button>
+                    </div>
+
+                    <div class="voucher-card scale-in" data-points="2000" data-value="200000">
+                        <div class="voucher-header">
+                            <i class="fas fa-crown"></i>
+                            <div class="voucher-badge">Cao cấp</div>
+                        </div>
+                        <div class="voucher-content">
+                            <h3>Voucher 200.000đ</h3>
+                            <p class="voucher-desc">Voucher thương hiệu cao cấp</p>
+                            <div class="voucher-details">
+                                <div class="points-required">
+                                    <i class="fas fa-coins"></i>
+                                    <span>2000 điểm</span>
+                                </div>
+                                <div class="validity">
+                                    <i class="fas fa-clock"></i>
+                                    <span>90 ngày</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="redeem-btn" onclick="redeemVoucher(2000, 200000, 'Voucher 200.000đ')">
+                            <i class="fas fa-gift"></i>
+                            Đổi ngay
+                        </button>
+                    </div>
+
+                    <div class="voucher-card scale-in" data-points="5000" data-value="500000">
+                        <div class="voucher-header">
+                            <i class="fas fa-gem"></i>
+                            <div class="voucher-badge">VIP</div>
+                        </div>
+                        <div class="voucher-content">
+                            <h3>Voucher 500.000đ</h3>
+                            <p class="voucher-desc">Voucher VIP cho khách hàng thân thiết</p>
+                            <div class="voucher-details">
+                                <div class="points-required">
+                                    <i class="fas fa-coins"></i>
+                                    <span>5000 điểm</span>
+                                </div>
+                                <div class="validity">
+                                    <i class="fas fa-clock"></i>
+                                    <span>120 ngày</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="redeem-btn" onclick="redeemVoucher(5000, 500000, 'Voucher 500.000đ')">
+                            <i class="fas fa-gift"></i>
+                            Đổi ngay
+                        </button>
+                    </div>
+
+                    <div class="voucher-card scale-in" data-points="100" data-value="10000">
+                        <div class="voucher-header">
+                            <i class="fas fa-coffee"></i>
+                            <div class="voucher-badge">Mới</div>
+                        </div>
+                        <div class="voucher-content">
+                            <h3>Voucher Cafe 10.000đ</h3>
+                            <p class="voucher-desc">Voucher mua cafe tại chuỗi đối tác</p>
+                            <div class="voucher-details">
+                                <div class="points-required">
+                                    <i class="fas fa-coins"></i>
+                                    <span>100 điểm</span>
+                                </div>
+                                <div class="validity">
+                                    <i class="fas fa-clock"></i>
+                                    <span>15 ngày</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="redeem-btn" onclick="redeemVoucher(100, 10000, 'Voucher Cafe 10.000đ')">
+                            <i class="fas fa-gift"></i>
+                            Đổi ngay
+                        </button>
+                    </div>
+
+                    <div class="voucher-card scale-in" data-points="300" data-value="30000">
+                        <div class="voucher-header">
+                            <i class="fas fa-utensils"></i>
+                            <div class="voucher-badge">Hot</div>
+                        </div>
+                        <div class="voucher-content">
+                            <h3>Voucher Ăn uống 30.000đ</h3>
+                            <p class="voucher-desc">Voucher nhà hàng và quán ăn</p>
+                            <div class="voucher-details">
+                                <div class="points-required">
+                                    <i class="fas fa-coins"></i>
+                                    <span>300 điểm</span>
+                                </div>
+                                <div class="validity">
+                                    <i class="fas fa-clock"></i>
+                                    <span>20 ngày</span>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="redeem-btn" onclick="redeemVoucher(300, 30000, 'Voucher Ăn uống 30.000đ')">
+                            <i class="fas fa-gift"></i>
+                            Đổi ngay
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CTA -->
+        <section class="cta fade-in" id="contact">
+            <div class="cta-content">
+            <h2>Hãy tham gia RecycleHub ngay hôm nay!</h2>
+                <p>Cùng nhau chung tay xây dựng Việt Nam xanh, sạch, đẹp. Tích điểm từ rác thải nhựa và đổi lấy những phần quà hấp dẫn!</p>
+                <div class="cta-buttons">
+                    <button type="button" class="btn-cta-primary" id="ctaRegisterBtn">
+                        <i class="fas fa-user-plus"></i>
+                        Đăng ký miễn phí
+                    </button>
+                    <button type="button" class="btn-cta-secondary" id="ctaLoginBtn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Đăng nhập
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-recycle"></i> RecycleHub</h4>
+                <p>Nền tảng thu mua rác thải nhựa thông minh, góp phần bảo vệ môi trường và tạo thu nhập cho cộng đồng.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>Liên kết nhanh</h4>
+                <p><a href="#hero">Trang chủ</a></p>
+                <p><a href="#checkin">Điểm danh</a></p>
+                <p><a href="#points">Tích điểm</a></p>
+                <p><a href="#redeem">Đổi điểm</a></p>
+                <p><a href="#contact">Liên hệ</a></p>
+            </div>
+            <div class="footer-section">
+                <h4>Thông tin liên hệ</h4>
+                <p><i class="fas fa-phone"></i> 1900 1234</p>
+                <p><i class="fas fa-envelope"></i> info@recyclehub.vn</p>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Đường ABC, Quận 1, TP.HCM</p>
+            </div>
+            <div class="footer-section">
+                <h4>Giờ hoạt động</h4>
+                <p>Thứ 2 - Thứ 6: 8:00 - 18:00</p>
+                <p>Thứ 7: 8:00 - 12:00</p>
+                <p>Chủ nhật: Nghỉ</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 RecycleHub. All rights reserved. | Thiết kế bởi RecycleHub Team</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-sign-in-alt"></i> Đăng nhập tài khoản</h3>
+                <span class="close" data-modal="loginModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail" class="required">Email hoặc Số điện thoại</label>
+                        <input type="text" id="loginEmail" name="loginEmail" placeholder="Nhập email hoặc số điện thoại" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword" class="required">Mật khẩu</label>
+                        <input type="password" id="loginPassword" name="loginPassword" placeholder="Nhập mật khẩu" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe" name="rememberMe">
+                            <span class="checkmark"></span>
+                            Ghi nhớ đăng nhập
+                        </label>
+                    </div>
+                    <button type="submit" class="btn-submit">Đăng nhập</button>
+                    <div class="auth-switch">
+                        <p>Chưa có tài khoản? <a href="#" id="switchToRegister">Đăng ký ngay</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user-plus"></i> Đăng ký tham gia RecycleHub</h3>
+                <span class="close" data-modal="registerModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="registerForm">
+                    <div class="form-group">
+                        <label for="fullName" class="required">Họ và tên</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Nhập họ và tên đầy đủ" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="required">Số điện thoại</label>
+                        <input type="tel" id="phone" name="phone" placeholder="Nhập số điện thoại" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="required">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Nhập địa chỉ email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="required">Mật khẩu</label>
+                        <input type="password" id="password" name="password" placeholder="Tối thiểu 6 ký tự" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword" class="required">Xác nhận mật khẩu</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Nhập lại mật khẩu" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="address" class="required">Địa chỉ</label>
+                        <textarea id="address" name="address" placeholder="Nhập địa chỉ chi tiết" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="plasticType">Loại nhựa chính bạn muốn bán</label>
+                        <select id="plasticType" name="plasticType">
+                            <option value="">Chọn loại nhựa</option>
+                            <option value="pet">Chai PET</option>
+                            <option value="bag">Túi nhựa</option>
+                            <option value="box">Hộp nhựa</option>
+                            <option value="all">Tất cả các loại</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-submit">Đăng ký ngay</button>
+                    <div class="auth-switch">
+                        <p>Đã có tài khoản? <a href="#" id="switchToLogin">Đăng nhập ngay</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Dashboard Modal -->
+    <div id="dashboardModal" class="modal">
+        <div class="modal-content dashboard-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-tachometer-alt"></i> Dashboard</h3>
+                <span class="close" data-modal="dashboardModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="dashboard-content">
+                    <div class="welcome-section">
+                        <h4>Chào mừng, <span id="dashboardUserName">Tên người dùng</span>!</h4>
+                        <p>Quản lý tài khoản và theo dõi hoạt động của bạn tại RecycleHub</p>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <i class="fas fa-coins"></i>
+                            <div class="stat-info">
+                                <h5 id="dashboardPoints">0</h5>
+                                <p>Điểm hiện tại</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-recycle"></i>
+                            <div class="stat-info">
+                                <h5 id="dashboardWaste">0</h5>
+                                <p>Kg rác đã nộp</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <i class="fas fa-gift"></i>
+                            <div class="stat-info">
+                                <h5 id="dashboardVouchers">0</h5>
+                                <p>Voucher đã đổi</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-actions">
+                        <button type="button" class="action-btn" id="checkInBtn">
+                            <i class="fas fa-calendar-check"></i>
+                            Điểm danh hôm nay
+                        </button>
+                        <button type="button" class="action-btn" id="addWasteBtn">
+                            <i class="fas fa-plus"></i>
+                            Thêm rác thải
+                        </button>
+                        <button type="button" class="action-btn" id="viewHistoryBtn">
+                            <i class="fas fa-history"></i>
+                            Lịch sử giao dịch
+                        </button>
+                        <button type="button" class="action-btn" id="viewVouchersBtn">
+                            <i class="fas fa-ticket-alt"></i>
+                            Voucher của tôi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Redeem Confirmation Modal -->
+    <div id="redeemModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-gift"></i> Xác nhận đổi điểm</h3>
+                <span class="close" data-modal="redeemModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="redeem-confirmation">
+                    <div class="voucher-preview">
+                        <i class="fas fa-ticket-alt" id="voucherIcon"></i>
+                        <h4 id="voucherName">Voucher 50.000đ</h4>
+                        <p id="voucherDesc">Voucher mua sắm tại cửa hàng đối tác</p>
+                    </div>
+
+                    <div class="points-info">
+                        <div class="points-detail">
+                            <span>Điểm cần thiết:</span>
+                            <span id="requiredPoints">500 điểm</span>
+                        </div>
+                        <div class="points-detail">
+                            <span>Điểm hiện tại:</span>
+                            <span id="currentPointsModal">0 điểm</span>
+                        </div>
+                        <div class="points-detail total">
+                            <span>Điểm còn lại:</span>
+                            <span id="remainingPoints">0 điểm</span>
+                        </div>
+                    </div>
+
+                    <div class="confirmation-actions">
+                        <button type="button" class="btn-cancel" onclick="closeRedeemModal()">
+                            <i class="fas fa-times"></i>
+                            Hủy
+                        </button>
+                        <button type="button" class="btn-confirm" id="confirmRedeemBtn">
+                            <i class="fas fa-check"></i>
+                            Xác nhận đổi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction History Modal -->
+    <div id="historyModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-history"></i> Lịch sử giao dịch</h3>
+                <span class="close" data-modal="historyModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="transaction-filters">
+                    <select id="transactionTypeFilter" class="filter-select">
+                        <option value="">Tất cả giao dịch</option>
+                        <option value="waste_exchange">Đổi rác thành điểm</option>
+                        <option value="daily_checkin">Điểm danh</option>
+                        <option value="bonus">Điểm thưởng</option>
+                        <option value="redemption">Đổi quà</option>
+                    </select>
+                </div>
+                <div class="transaction-list" id="transactionList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Đang tải dữ liệu...</p>
+                    </div>
+                </div>
+                <div class="transaction-pagination" id="transactionPagination">
+                    <!-- Pagination buttons will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Waste Modal -->
+    <div id="addWasteModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-recycle"></i> Thêm rác thải</h3>
+                <span class="close" data-modal="addWasteModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="waste-form-container">
+                    <div class="waste-form-header">
+                        <div class="waste-icon">
+                            <i class="fas fa-trash-alt"></i>
+                        </div>
+                        <h4>Thông tin rác thải</h4>
+                        <p>Nhập số kg rác thải bạn muốn nộp để nhận điểm</p>
+                    </div>
+                    
+                    <form id="wasteForm" class="waste-form">
+                        <div class="form-group">
+                            <label for="wasteAmount">
+                                <i class="fas fa-weight"></i>
+                                Số kg rác thải
+                            </label>
+                            <div class="input-group">
+                                <input 
+                                    type="number" 
+                                    id="wasteAmount" 
+                                    name="wasteAmount" 
+                                    placeholder="Nhập số kg rác thải..."
+                                    min="0.1"
+                                    max="1000"
+                                    step="0.1"
+                                    required
+                                >
+                                <span class="input-unit">kg</span>
+                            </div>
+                            <small class="input-hint">Tối thiểu 0.1kg, tối đa 1000kg</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="wasteType">
+                                <i class="fas fa-tags"></i>
+                                Loại rác thải
+                            </label>
+                            <select id="wasteType" name="wasteType">
+                                <option value="all">Tất cả loại rác</option>
+                                <option value="pet">Chai nhựa PET</option>
+                                <option value="bag">Túi nilon</option>
+                                <option value="box">Hộp giấy</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="wasteLocation">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Địa điểm nộp rác (tùy chọn)
+                            </label>
+                            <input 
+                                type="text" 
+                                id="wasteLocation" 
+                                name="wasteLocation" 
+                                placeholder="Ví dụ: Trạm thu gom số 1, Quận 1"
+                                maxlength="200"
+                            >
+                        </div>
+
+                        <div class="points-preview" id="pointsPreview">
+                            <div class="points-preview-header">
+                                <i class="fas fa-calculator"></i>
+                                <span>Dự kiến điểm nhận được</span>
+                            </div>
+                            <div class="points-preview-content">
+                                <div class="points-amount" id="previewPoints">0 điểm</div>
+                                <div class="points-breakdown" id="pointsBreakdown">
+                                    <div class="breakdown-item">
+                                        <span>Điểm cơ bản:</span>
+                                        <span id="basePoints">0 điểm</span>
+                                    </div>
+                                    <div class="breakdown-item bonus" id="bonusBreakdown" style="display: none;">
+                                        <span>Điểm thưởng:</span>
+                                        <span id="bonusPoints">+0 điểm</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="button" class="btn-cancel" onclick="closeAddWasteModal()">
+                                <i class="fas fa-times"></i>
+                                Hủy
+                            </button>
+                            <button type="submit" class="btn-submit" id="submitWasteBtn">
+                                <i class="fas fa-check"></i>
+                                Xác nhận nộp rác
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vouchers Modal -->
+    <div id="vouchersModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-ticket-alt"></i> Voucher của tôi</h3>
+                <span class="close" data-modal="vouchersModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="vouchers-list" id="vouchersList">
+                    <div class="loading-spinner">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Đang tải danh sách voucher...</p>
+                    </div>
+                </div>
+                <div class="vouchers-pagination" id="vouchersPagination">
+                    <!-- Pagination buttons will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- API Client -->
+    <script src="js/api.js"></script>
+    
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileNav = document.getElementById('mobile-nav');
+        
+        mobileMenu.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileNav.classList.remove('active');
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Animation observer
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+            
+            function updateCounter() {
+                start += increment;
+                if (start < target) {
+                    element.textContent = Math.floor(start).toLocaleString();
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target.toLocaleString();
+                }
+            }
+            updateCounter();
+        }
+
+        // Stats counter observer
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const statNumber = entry.target.querySelector('.stat-number');
+                    const target = parseInt(statNumber.getAttribute('data-target'));
+                    animateCounter(statNumber, target);
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.stat-item').forEach(item => {
+            statsObserver.observe(item);
+        });
+
+        // Authentication System
+        class AuthSystem {
+            constructor() {
+                this.currentUser = null;
+                this.api = window.RecycleHubAPI;
+                this.init();
+            }
+
+            async init() {
+                await this.checkLoginStatus();
+                this.bindEvents();
+            }
+
+            async checkLoginStatus() {
+                try {
+                    if (this.api.isLoggedIn()) {
+                        // Kiểm tra token có còn hợp lệ không
+                        const result = await this.api.getCurrentUser();
+                        if (result.success) {
+                            this.currentUser = result.data.user;
+                            this.updateUI();
+                        }
+                    } else {
+                        // Thử lấy user data từ localStorage
+                        const userData = localStorage.getItem('recyclehub_user');
+                        if (userData) {
+                            this.currentUser = JSON.parse(userData);
+                            this.updateUI();
+                        }
+                    }
+                } catch (error) {
+                    console.warn('Token không hợp lệ hoặc server không khả dụng:', error);
+                    this.currentUser = null;
+                    this.updateUI();
+                }
+            }
+
+            bindEvents() {
+                // Wait for elements to be available
+                const bindElement = (id, event, handler) => {
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.addEventListener(event, handler);
+                    } else {
+                        console.warn(`Element with id '${id}' not found`);
+                    }
+                };
+
+                // Modal controls
+                bindElement('loginBtn', 'click', () => this.openModal('loginModal'));
+                bindElement('registerBtnNav', 'click', () => this.openModal('registerModal'));
+                // bindElement('registerBtn', 'click', () => this.openModal('registerModal'));
+                
+                // Hero CTA buttons
+                bindElement('heroRegisterBtn', 'click', () => this.openModal('registerModal'));
+                bindElement('heroLoginBtn', 'click', () => this.openModal('loginModal'));
+                
+                // CTA section buttons
+                bindElement('ctaRegisterBtn', 'click', () => this.openModal('registerModal'));
+                bindElement('ctaLoginBtn', 'click', () => this.openModal('loginModal'));
+                
+                // Mobile auth buttons
+                bindElement('mobileLoginBtn', 'click', () => {
+                    this.openModal('loginModal');
+                    mobileNav.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+                bindElement('mobileRegisterBtn', 'click', () => {
+                    this.openModal('registerModal');
+                    mobileNav.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                });
+
+                // Close modals
+                document.querySelectorAll('.close').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const modalId = e.target.getAttribute('data-modal');
+                        this.closeModal(modalId);
+                    });
+                });
+
+                // Switch between login/register
+                bindElement('switchToRegister', 'click', (e) => {
+                    e.preventDefault();
+                    this.closeModal('loginModal');
+                    setTimeout(() => this.openModal('registerModal'), 300);
+                });
+
+                bindElement('switchToLogin', 'click', (e) => {
+                    e.preventDefault();
+                    this.closeModal('registerModal');
+                    setTimeout(() => this.openModal('loginModal'), 300);
+                });
+
+                // Form submissions
+                bindElement('loginForm', 'submit', (e) => this.handleLogin(e));
+                bindElement('registerForm', 'submit', (e) => this.handleRegister(e));
+
+                // Dashboard actions
+                bindElement('dashboardLink', 'click', (e) => {
+                    e.preventDefault();
+                    this.openModal('dashboardModal');
+                });
+
+                bindElement('profileLink', 'click', (e) => {
+                    e.preventDefault();
+                    window.location.href = 'profile.html';
+                });
+
+                bindElement('logoutLink', 'click', (e) => {
+                    e.preventDefault();
+                    this.logout();
+                });
+
+                // Close modals when clicking outside
+                window.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal')) {
+                        this.closeModal(e.target.id);
+                    }
+                });
+            }
+
+            openModal(modalId) {
+                const modal = document.getElementById(modalId);
+                if (!modal) {
+                    console.error(`Modal with id '${modalId}' not found`);
+                    return;
+                }
+                
+                modal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+                
+                // Focus first input
+                const firstInput = modal.querySelector('input');
+                if (firstInput) {
+                    setTimeout(() => firstInput.focus(), 100);
+                }
+
+                // Debug: Check if form exists
+                const form = modal.querySelector('form');
+                if (form) {
+                    console.log(`Form found in ${modalId}:`, form.id);
+                } else {
+                    console.warn(`No form found in ${modalId}`);
+                }
+            }
+
+            closeModal(modalId) {
+                const modal = document.getElementById(modalId);
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            async handleLogin(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                const submitBtn = e.target.querySelector('.btn-submit');
+
+                // Show loading state
+                this.setLoadingState(submitBtn, true);
+
+                try {
+                    // Validate
+                    if (!data.loginEmail || !data.loginPassword) {
+                        this.setLoadingState(submitBtn, false);
+                        this.showAlert('Vui lòng điền đầy đủ thông tin!', 'error');
+                        return;
+                    }
+
+                    // Call API
+                    const result = await this.api.login({
+                        loginEmail: data.loginEmail,
+                        loginPassword: data.loginPassword
+                    });
+
+                    if (result.success) {
+                        this.currentUser = result.data.user;
+                        this.updateUI();
+                        this.setLoadingState(submitBtn, false);
+                        this.closeModal('loginModal');
+                        this.showAlert('Đăng nhập thành công!', 'success');
+                    }
+                } catch (error) {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert(error.message || 'Đăng nhập thất bại!', 'error');
+                }
+            }
+
+            async handleRegister(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const data = Object.fromEntries(formData);
+                const submitBtn = e.target.querySelector('.btn-submit');
+
+                // Show loading state
+                this.setLoadingState(submitBtn, true);
+
+                try {
+                    // Validate
+                    if (!data.fullName || !data.phone || !data.email || !data.password || !data.confirmPassword || !data.address) {
+                        this.setLoadingState(submitBtn, false);
+                        this.showAlert('Vui lòng điền đầy đủ thông tin bắt buộc!', 'error');
+                        return;
+                    }
+
+                    if (data.password !== data.confirmPassword) {
+                        this.setLoadingState(submitBtn, false);
+                        this.showAlert('Mật khẩu xác nhận không khớp!', 'error');
+                        return;
+                    }
+
+                    if (data.password.length < 6) {
+                        this.setLoadingState(submitBtn, false);
+                        this.showAlert('Mật khẩu phải có ít nhất 6 ký tự!', 'error');
+                        return;
+                    }
+
+                    // Call API
+                    const result = await this.api.register({
+                        fullName: data.fullName,
+                        phone: data.phone,
+                        email: data.email,
+                        password: data.password,
+                        confirmPassword: data.confirmPassword,
+                        address: data.address,
+                        plasticType: data.plasticType
+                    });
+
+                    if (result.success) {
+                        this.currentUser = result.data.user;
+                        this.updateUI();
+                        this.setLoadingState(submitBtn, false);
+                        this.closeModal('registerModal');
+                        this.showAlert('Đăng ký thành công! Chào mừng bạn đến với RecycleHub!', 'success');
+                    }
+                } catch (error) {
+                    this.setLoadingState(submitBtn, false);
+                    this.showAlert(error.message || 'Đăng ký thất bại!', 'error');
+                }
+            }
+
+            async logout() {
+                try {
+                    await this.api.logout();
+                } catch (error) {
+                    console.warn('Logout API call failed:', error);
+                } finally {
+                    this.currentUser = null;
+                    this.updateUI();
+                    this.showAlert('Đã đăng xuất thành công!', 'success');
+                }
+            }
+
+            updateUI() {
+                const authButtons = document.getElementById('auth-buttons');
+                const userMenu = document.getElementById('user-menu');
+                const userName = document.getElementById('user-name');
+                const dashboardUserName = document.getElementById('dashboardUserName');
+
+                if (this.currentUser) {
+                    authButtons.style.display = 'none';
+                    userMenu.style.display = 'flex';
+                    userName.textContent = this.currentUser.fullName;
+                    if (dashboardUserName) {
+                        dashboardUserName.textContent = this.currentUser.fullName;
+                    }
+                } else {
+                    authButtons.style.display = 'flex';
+                    userMenu.style.display = 'none';
+                }
+            }
+
+            setLoadingState(button, isLoading) {
+                if (isLoading) {
+                    button.disabled = true;
+                    button.classList.add('loading');
+                    button.setAttribute('data-original-text', button.textContent);
+                    button.textContent = 'Đang xử lý...';
+                } else {
+                    button.disabled = false;
+                    button.classList.remove('loading');
+                    button.textContent = button.getAttribute('data-original-text') || 'Submit';
+                }
+            }
+
+            showAlert(message, type = 'info') {
+                // Create alert element
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                `;
+
+                // Add styles
+                alert.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#d4edda' : type === 'error' ? '#f8d7da' : '#d1ecf1'};
+                    color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#0c5460'};
+                    border: 1px solid ${type === 'success' ? '#c3e6cb' : type === 'error' ? '#f5c6cb' : '#bee5eb'};
+                    border-radius: 8px;
+                    padding: 1rem 1.5rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    z-index: 10000;
+                    animation: slideInRight 0.3s ease;
+                `;
+
+                document.body.appendChild(alert);
+
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    alert.style.animation = 'slideOutRight 0.3s ease';
+                    setTimeout(() => alert.remove(), 300);
+                }, 5000);
+            }
+        }
+
+        // Points System
+        class PointsSystem {
+            constructor() {
+                this.currentPoints = parseInt(localStorage.getItem('recyclehub_points')) || 0;
+                this.totalWaste = parseFloat(localStorage.getItem('recyclehub_waste')) || 0;
+                this.redeemedVouchers = parseInt(localStorage.getItem('recyclehub_vouchers')) || 0;
+                this.lastCheckIn = localStorage.getItem('recyclehub_last_checkin');
+                this.init();
+            }
+
+            async init() {
+                await this.loadUserData();
+                this.updatePointsDisplay();
+                this.bindEvents();
+                this.updateCheckinUI();
+                this.checkDailyCheckIn();
+            }
+
+            async loadUserData() {
+                // Kiểm tra xem user có đăng nhập không
+                if (window.RecycleHubAPI.isLoggedIn()) {
+                    try {
+                        // Load dữ liệu từ API
+                        const result = await window.RecycleHubAPI.getUserPointsStats();
+                        if (result.success) {
+                            const userStats = result.data;
+                            this.currentPoints = userStats.currentPoints || 0;
+                            this.checkinStreak = userStats.checkinStreak || 0;
+                            this.totalWaste = userStats.transactionStats?.totalWasteKg || 0;
+                            
+                            // Cập nhật localStorage
+                            localStorage.setItem('recyclehub_points', this.currentPoints);
+                            localStorage.setItem('recyclehub_waste', this.totalWaste);
+                            
+                            if (userStats.lastCheckin) {
+                                this.lastCheckIn = new Date(userStats.lastCheckin).toDateString();
+                                localStorage.setItem('recyclehub_last_checkin', this.lastCheckIn);
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error loading user data:', error);
+                        // Fallback to localStorage data
+                        this.loadFromLocalStorage();
+                    }
+                } else {
+                    // Fallback to localStorage data
+                    this.loadFromLocalStorage();
+                }
+            }
+
+            loadFromLocalStorage() {
+                // Load dữ liệu từ localStorage như trước
+                this.currentPoints = parseInt(localStorage.getItem('recyclehub_points')) || 0;
+                this.totalWaste = parseFloat(localStorage.getItem('recyclehub_waste')) || 0;
+                this.redeemedVouchers = parseInt(localStorage.getItem('recyclehub_vouchers')) || 0;
+                this.lastCheckIn = localStorage.getItem('recyclehub_last_checkin');
+            }
+
+            bindEvents() {
+                // Points calculator
+                const wasteInput = document.getElementById('wasteAmount');
+                if (wasteInput) {
+                    wasteInput.addEventListener('input', (e) => this.calculatePoints(e.target.value));
+                }
+
+                // Check-in button (dashboard)
+                const checkInBtn = document.getElementById('checkInBtn');
+                if (checkInBtn) {
+                    checkInBtn.addEventListener('click', () => this.dailyCheckIn());
+                }
+
+                // Daily check-in button (main section)
+                const dailyCheckinBtn = document.getElementById('dailyCheckinBtn');
+                if (dailyCheckinBtn) {
+                    dailyCheckinBtn.addEventListener('click', () => this.dailyCheckIn());
+                }
+
+                // Add waste button
+                const addWasteBtn = document.getElementById('addWasteBtn');
+                if (addWasteBtn) {
+                    addWasteBtn.addEventListener('click', () => this.addWaste());
+                }
+
+                // View history button
+                const viewHistoryBtn = document.getElementById('viewHistoryBtn');
+                if (viewHistoryBtn) {
+                    viewHistoryBtn.addEventListener('click', () => this.viewTransactionHistory());
+                }
+
+                // View vouchers button
+                const viewVouchersBtn = document.getElementById('viewVouchersBtn');
+                if (viewVouchersBtn) {
+                    viewVouchersBtn.addEventListener('click', () => this.viewVouchers());
+                }
+
+                // Transaction type filter
+                const transactionTypeFilter = document.getElementById('transactionTypeFilter');
+                if (transactionTypeFilter) {
+                    transactionTypeFilter.addEventListener('change', (e) => this.filterTransactions(e.target.value));
+                }
+
+                // Confirm redeem button
+                const confirmRedeemBtn = document.getElementById('confirmRedeemBtn');
+                if (confirmRedeemBtn) {
+                    confirmRedeemBtn.addEventListener('click', () => this.confirmRedeem());
+                }
+
+                // Waste form events
+                const wasteForm = document.getElementById('wasteForm');
+                if (wasteForm) {
+                    wasteForm.addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        this.submitWaste();
+                    });
+                }
+
+                // Waste amount input for real-time preview
+                const wasteAmountInput = document.getElementById('wasteAmount');
+                if (wasteAmountInput) {
+                    wasteAmountInput.addEventListener('input', () => this.updatePointsPreview());
+                }
+
+
+            }
+
+            async calculatePoints(wasteAmount) {
+                const amount = parseFloat(wasteAmount) || 0;
+                
+                if (amount <= 0) {
+                    const pointsElement = document.getElementById('calculatedPoints');
+                    const bonusInfo = document.getElementById('bonusInfo');
+                    
+                    if (pointsElement) {
+                        pointsElement.textContent = '0 điểm';
+                    }
+                    if (bonusInfo) {
+                        bonusInfo.style.display = 'none';
+                    }
+                    return;
+                }
+
+                try {
+                    // Gọi API để tính điểm
+                    const result = await window.RecycleHubAPI.calculatePoints(amount);
+                    
+                    if (result.success) {
+                        const pointsCalculation = result.data.pointsCalculation;
+                        
+                        const pointsElement = document.getElementById('calculatedPoints');
+                        const bonusInfo = document.getElementById('bonusInfo');
+                        
+                        if (pointsElement) {
+                            pointsElement.textContent = `${pointsCalculation.totalPoints} điểm`;
+                        }
+                        
+                        if (bonusInfo) {
+                            bonusInfo.style.display = pointsCalculation.hasBonus ? 'flex' : 'none';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error calculating points:', error);
+                    // Fallback to local calculation
+                    let points = 0;
+                    let bonus = false;
+
+                    if (amount > 0) {
+                        // Base points: 10 points per kg
+                        points = amount * 10;
+                        
+                        // Bonus: +1 point per kg if >= 10kg
+                        if (amount >= 10) {
+                            points += amount; // +1 bonus point per kg
+                            bonus = true;
+                        }
+                    }
+
+                    const pointsElement = document.getElementById('calculatedPoints');
+                    const bonusInfo = document.getElementById('bonusInfo');
+                    
+                    if (pointsElement) {
+                        pointsElement.textContent = `${Math.floor(points)} điểm`;
+                    }
+                    
+                    if (bonusInfo) {
+                        bonusInfo.style.display = bonus ? 'flex' : 'none';
+                    }
+                }
+            }
+
+            async dailyCheckIn() {
+                // Kiểm tra đăng nhập
+                if (!window.RecycleHubAPI.isLoggedIn()) {
+                    this.showAlert('Vui lòng đăng nhập để sử dụng tính năng này!', 'error');
+                    return;
+                }
+
+                try {
+                    // Hiển thị loading
+                    this.showAlert('Đang xử lý điểm danh...', 'info');
+                    
+                    // Add animation to button
+                    const checkinBtn = document.getElementById('dailyCheckinBtn');
+                    if (checkinBtn) {
+                        checkinBtn.classList.add('animating');
+                        setTimeout(() => checkinBtn.classList.remove('animating'), 600);
+                    }
+                    
+                    // Gọi API để điểm danh
+                    const result = await window.RecycleHubAPI.dailyCheckin();
+                    
+                    if (result.success) {
+                        // Cập nhật UI với dữ liệu từ server
+                        this.currentPoints = result.data.user.points;
+                        this.checkinStreak = result.data.checkinStreak;
+                        
+                        // Lưu vào localStorage để backup
+                        localStorage.setItem('recyclehub_points', this.currentPoints);
+                        localStorage.setItem('recyclehub_last_checkin', new Date().toDateString());
+                        
+                        // Update check-in stats
+                        this.updateCheckinStats();
+                        
+                        // Update UI
+                        this.updateCheckinUI();
+                        
+                        this.showAlert(result.message, 'success');
+                        this.updatePointsDisplay();
+                    }
+                } catch (error) {
+                    console.error('Error daily checkin:', error);
+                    this.showAlert(`Lỗi: ${error.message}`, 'error');
+                }
+            }
+
+            async addWaste() {
+                // Kiểm tra đăng nhập
+                if (!window.RecycleHubAPI.isLoggedIn()) {
+                    this.showAlert('Vui lòng đăng nhập để sử dụng tính năng này!', 'error');
+                    return;
+                }
+
+                // Hiển thị modal thêm rác thải
+                const modal = document.getElementById('addWasteModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                    document.body.style.overflow = 'hidden';
+                    
+                    // Reset form
+                    document.getElementById('wasteForm').reset();
+                    this.updatePointsPreview();
+                }
+            }
+
+            addPoints(points) {
+                this.currentPoints += points;
+                localStorage.setItem('recyclehub_points', this.currentPoints);
+                this.updatePointsDisplay();
+            }
+
+            updatePointsPreview() {
+                const wasteAmount = parseFloat(document.getElementById('wasteAmount').value) || 0;
+                const pointsData = this.calculatePoints(wasteAmount);
+                
+                document.getElementById('previewPoints').textContent = `${pointsData.totalPoints} điểm`;
+                document.getElementById('basePoints').textContent = `${pointsData.basePoints} điểm`;
+                
+                const bonusBreakdown = document.getElementById('bonusBreakdown');
+                if (pointsData.hasBonus) {
+                    bonusBreakdown.style.display = 'flex';
+                    document.getElementById('bonusPoints').textContent = `+${pointsData.bonusPoints} điểm`;
+                } else {
+                    bonusBreakdown.style.display = 'none';
+                }
+            }
+
+            async submitWaste() {
+                const form = document.getElementById('wasteForm');
+                const formData = new FormData(form);
+                const wasteAmount = parseFloat(formData.get('wasteAmount'));
+                const wasteType = formData.get('wasteType');
+                const wasteLocation = formData.get('wasteLocation');
+
+                if (!wasteAmount || wasteAmount <= 0) {
+                    this.showAlert('Vui lòng nhập số kg rác thải hợp lệ!', 'error');
+                    return;
+                }
+
+                try {
+                    // Disable submit button
+                    const submitBtn = document.getElementById('submitWasteBtn');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Đang xử lý...';
+
+                    // Gọi API để đổi rác thành điểm
+                    const result = await window.RecycleHubAPI.exchangeWasteForPoints({
+                        wasteAmount: wasteAmount,
+                        location: wasteLocation || '',
+                        plasticType: wasteType
+                    });
+                    
+                    if (result.success) {
+                        // Cập nhật UI với dữ liệu từ server
+                        this.currentPoints = result.data.user.points;
+                        this.totalWaste = result.data.user.stats.totalKg;
+                        
+                        // Lưu vào localStorage để backup
+                        localStorage.setItem('recyclehub_points', this.currentPoints);
+                        localStorage.setItem('recyclehub_waste', this.totalWaste);
+                        
+                        this.updatePointsDisplay();
+                        this.closeAddWasteModal();
+                        this.showAlert(`Nộp ${wasteAmount}kg rác thành công! Nhận được ${result.data.transaction.pointsEarned} điểm`, 'success');
+                    }
+                } catch (error) {
+                    console.error('Error adding waste:', error);
+                    this.showAlert(`Lỗi: ${error.message}`, 'error');
+                } finally {
+                    // Re-enable submit button
+                    const submitBtn = document.getElementById('submitWasteBtn');
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = '<i class="fas fa-check"></i> Xác nhận nộp rác';
+                }
+            }
+
+            closeAddWasteModal() {
+                const modal = document.getElementById('addWasteModal');
+                if (modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+
+
+
+            async viewTransactionHistory() {
+                // Kiểm tra đăng nhập
+                if (!window.RecycleHubAPI.isLoggedIn()) {
+                    this.showAlert('Vui lòng đăng nhập để xem lịch sử giao dịch!', 'error');
+                    return;
+                }
+
+                // Hiển thị modal
+                const modal = document.getElementById('historyModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                    await this.loadTransactionHistory();
+                }
+            }
+
+            async loadTransactionHistory(page = 1, type = '') {
+                try {
+                    const transactionList = document.getElementById('transactionList');
+                    if (transactionList) {
+                        transactionList.innerHTML = `
+                            <div class="loading-spinner">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>Đang tải dữ liệu...</p>
+                            </div>
+                        `;
+                    }
+
+                    const result = await window.RecycleHubAPI.getUserTransactions({
+                        page: page,
+                        limit: 10,
+                        type: type
+                    });
+
+                    if (result.success) {
+                        this.displayTransactions(result.data.transactions);
+                        this.displayPagination(result.data.pagination);
+                    }
+                } catch (error) {
+                    console.error('Error loading transaction history:', error);
+                    const transactionList = document.getElementById('transactionList');
+                    if (transactionList) {
+                        transactionList.innerHTML = `
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>Lỗi tải dữ liệu: ${error.message}</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
+
+            displayTransactions(transactions) {
+                const transactionList = document.getElementById('transactionList');
+                if (!transactionList) return;
+
+                if (transactions.length === 0) {
+                    transactionList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-inbox"></i>
+                            <p>Chưa có giao dịch nào</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const transactionsHTML = transactions.map(transaction => {
+                    const date = new Date(transaction.createdAt).toLocaleDateString('vi-VN');
+                    const time = new Date(transaction.createdAt).toLocaleTimeString('vi-VN', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+                    
+                    let icon = 'fas fa-coins';
+                    let typeText = 'Giao dịch';
+                    
+                    switch (transaction.type) {
+                        case 'waste_exchange':
+                            icon = 'fas fa-recycle';
+                            typeText = 'Đổi rác thành điểm';
+                            break;
+                        case 'daily_checkin':
+                            icon = 'fas fa-calendar-check';
+                            typeText = 'Điểm danh';
+                            break;
+                        case 'bonus':
+                            icon = 'fas fa-gift';
+                            typeText = 'Điểm thưởng';
+                            break;
+                        case 'redemption':
+                            icon = 'fas fa-ticket-alt';
+                            typeText = 'Đổi quà';
+                            break;
+                    }
+
+                    return `
+                        <div class="transaction-item">
+                            <div class="transaction-icon">
+                                <i class="${icon}"></i>
+                            </div>
+                            <div class="transaction-details">
+                                <div class="transaction-info">
+                                    <h4>${typeText}</h4>
+                                    <p>${transaction.description}</p>
+                                    <small>${date} - ${time}</small>
+                                </div>
+                                <div class="transaction-points ${transaction.pointsEarned > 0 ? 'positive' : 'negative'}">
+                                    ${transaction.pointsEarned > 0 ? '+' : ''}${transaction.pointsEarned} điểm
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                transactionList.innerHTML = transactionsHTML;
+            }
+
+            displayPagination(pagination) {
+                const paginationContainer = document.getElementById('transactionPagination');
+                if (!paginationContainer) return;
+
+                if (pagination.totalPages <= 1) {
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+
+                let paginationHTML = '<div class="pagination">';
+                
+                // Previous button
+                if (pagination.hasPrev) {
+                    paginationHTML += `<button class="page-btn" onclick="pointsSystem.loadTransactionHistory(${pagination.currentPage - 1})">
+                        <i class="fas fa-chevron-left"></i> Trước
+                    </button>`;
+                }
+
+                // Page numbers
+                for (let i = Math.max(1, pagination.currentPage - 2); i <= Math.min(pagination.totalPages, pagination.currentPage + 2); i++) {
+                    paginationHTML += `<button class="page-btn ${i === pagination.currentPage ? 'active' : ''}" 
+                        onclick="pointsSystem.loadTransactionHistory(${i})">${i}</button>`;
+                }
+
+                // Next button
+                if (pagination.hasNext) {
+                    paginationHTML += `<button class="page-btn" onclick="pointsSystem.loadTransactionHistory(${pagination.currentPage + 1})">
+                        Sau <i class="fas fa-chevron-right"></i>
+                    </button>`;
+                }
+
+                paginationHTML += '</div>';
+                paginationContainer.innerHTML = paginationHTML;
+            }
+
+            async filterTransactions(type) {
+                await this.loadTransactionHistory(1, type);
+            }
+
+            async viewVouchers() {
+                // Kiểm tra đăng nhập
+                if (!window.RecycleHubAPI.isLoggedIn()) {
+                    this.showAlert('Vui lòng đăng nhập để xem voucher!', 'error');
+                    return;
+                }
+
+                // Hiển thị modal
+                const modal = document.getElementById('vouchersModal');
+                if (modal) {
+                    modal.style.display = 'block';
+                    await this.loadVouchers();
+                }
+            }
+
+            async loadVouchers(page = 1) {
+                try {
+                    const vouchersList = document.getElementById('vouchersList');
+                    if (vouchersList) {
+                        vouchersList.innerHTML = `
+                            <div class="loading-spinner">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <p>Đang tải danh sách voucher...</p>
+                            </div>
+                        `;
+                    }
+
+                    const result = await window.RecycleHubAPI.getUserVouchers({
+                        page: page,
+                        limit: 10
+                    });
+
+                    if (result.success) {
+                        this.displayVouchers(result.data.vouchers);
+                        this.displayVouchersPagination(result.data.pagination);
+                    }
+                } catch (error) {
+                    console.error('Error loading vouchers:', error);
+                    const vouchersList = document.getElementById('vouchersList');
+                    if (vouchersList) {
+                        vouchersList.innerHTML = `
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <p>Lỗi tải dữ liệu: ${error.message}</p>
+                            </div>
+                        `;
+                    }
+                }
+            }
+
+            displayVouchers(vouchers) {
+                const vouchersList = document.getElementById('vouchersList');
+                if (!vouchersList) return;
+
+                if (vouchers.length === 0) {
+                    vouchersList.innerHTML = `
+                        <div class="empty-state">
+                            <i class="fas fa-ticket-alt"></i>
+                            <p>Bạn chưa có voucher nào</p>
+                            <small>Hãy đổi điểm để nhận voucher nhé!</small>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const vouchersHTML = vouchers.map(voucher => {
+                    const date = new Date(voucher.redeemedAt).toLocaleDateString('vi-VN');
+                    const time = new Date(voucher.redeemedAt).toLocaleTimeString('vi-VN', { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                    });
+                    
+                    return `
+                        <div class="voucher-item">
+                            <div class="voucher-icon">
+                                <i class="${voucher.voucherDetails.iconClass || 'fas fa-ticket-alt'}"></i>
+                            </div>
+                            <div class="voucher-details">
+                                <div class="voucher-info">
+                                    <h4>${voucher.voucherDetails.name}</h4>
+                                    <p>${voucher.voucherDetails.description}</p>
+                                    <div class="voucher-value">
+                                        <span class="value-amount">${voucher.voucherDetails.value.toLocaleString('vi-VN')} VNĐ</span>
+                                        <span class="points-used">-${voucher.pointsUsed} điểm</span>
+                                    </div>
+                                    <small>Đổi ngày ${date} - ${time}</small>
+                                </div>
+                                <div class="voucher-code-section">
+                                    <div class="voucher-code">
+                                        <span class="code-label">Mã voucher:</span>
+                                        <span class="code-value" id="voucherCode_${voucher.id}">${voucher.voucherCode}</span>
+                                        <button class="copy-btn" onclick="pointsSystem.copyVoucherCode('${voucher.voucherCode}', 'voucherCode_${voucher.id}')">
+                                            <i class="fas fa-copy"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                vouchersList.innerHTML = vouchersHTML;
+            }
+
+            displayVouchersPagination(pagination) {
+                const paginationContainer = document.getElementById('vouchersPagination');
+                if (!paginationContainer) return;
+
+                if (pagination.totalPages <= 1) {
+                    paginationContainer.innerHTML = '';
+                    return;
+                }
+
+                let paginationHTML = '<div class="pagination">';
+                
+                // Previous button
+                if (pagination.hasPrev) {
+                    paginationHTML += `<button class="page-btn" onclick="pointsSystem.loadVouchers(${pagination.currentPage - 1})">
+                        <i class="fas fa-chevron-left"></i> Trước
+                    </button>`;
+                }
+
+                // Page numbers
+                for (let i = Math.max(1, pagination.currentPage - 2); i <= Math.min(pagination.totalPages, pagination.currentPage + 2); i++) {
+                    paginationHTML += `<button class="page-btn ${i === pagination.currentPage ? 'active' : ''}" 
+                        onclick="pointsSystem.loadVouchers(${i})">${i}</button>`;
+                }
+
+                // Next button
+                if (pagination.hasNext) {
+                    paginationHTML += `<button class="page-btn" onclick="pointsSystem.loadVouchers(${pagination.currentPage + 1})">
+                        Sau <i class="fas fa-chevron-right"></i>
+                    </button>`;
+                }
+
+                paginationHTML += '</div>';
+                paginationContainer.innerHTML = paginationHTML;
+            }
+
+            copyVoucherCode(voucherCode, elementId) {
+                // Copy to clipboard
+                navigator.clipboard.writeText(voucherCode).then(() => {
+                    // Show success feedback
+                    const element = document.getElementById(elementId);
+                    if (element) {
+                        const originalText = element.textContent;
+                        element.textContent = 'Đã copy!';
+                        element.style.color = '#28a745';
+                        
+                        setTimeout(() => {
+                            element.textContent = originalText;
+                            element.style.color = '';
+                        }, 2000);
+                    }
+                    
+                    this.showAlert(`Đã copy mã voucher: ${voucherCode}`, 'success');
+                }).catch(err => {
+                    console.error('Failed to copy: ', err);
+                    this.showAlert('Không thể copy mã voucher', 'error');
+                });
+            }
+
+
+            redeemVoucher(requiredPoints, voucherValue, voucherName, voucherDesc, iconClass) {
+                if (this.currentPoints < requiredPoints) {
+                    this.showAlert(`Không đủ điểm! Bạn cần ${requiredPoints} điểm để đổi voucher này.`, 'error');
+                    return;
+                }
+
+                // Show confirmation modal
+                document.getElementById('voucherName').textContent = voucherName;
+                document.getElementById('voucherDesc').textContent = voucherDesc;
+                document.getElementById('requiredPoints').textContent = `${requiredPoints} điểm`;
+                document.getElementById('currentPointsModal').textContent = `${this.currentPoints} điểm`;
+                document.getElementById('remainingPoints').textContent = `${this.currentPoints - requiredPoints} điểm`;
+                document.getElementById('voucherIcon').className = iconClass;
+                
+                // Store current redemption data
+                this.currentRedemption = {
+                    points: requiredPoints,
+                    value: voucherValue,
+                    name: voucherName,
+                    description: voucherDesc,
+                    iconClass: iconClass,
+                    type: 'shopping' // Default type
+                };
+
+                // Show modal
+                document.getElementById('redeemModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            }
+
+            async confirmRedeem() {
+                if (!this.currentRedemption) return;
+
+                // Kiểm tra đăng nhập
+                if (!window.RecycleHubAPI.isLoggedIn()) {
+                    this.showAlert('Vui lòng đăng nhập để đổi voucher!', 'error');
+                    return;
+                }
+
+                try {
+                    // Hiển thị loading
+                    this.showAlert('Đang xử lý đổi voucher...', 'info');
+
+                    // Gọi API để đổi voucher
+                    const result = await window.RecycleHubAPI.redeemVoucher({
+                        voucherType: this.currentRedemption.type || 'shopping',
+                        pointsRequired: this.currentRedemption.points,
+                        voucherValue: this.currentRedemption.value,
+                        voucherName: this.currentRedemption.name,
+                        voucherDescription: this.currentRedemption.description,
+                        iconClass: this.currentRedemption.iconClass
+                    });
+
+                    if (result.success) {
+                        // Cập nhật UI với dữ liệu từ server
+                        this.currentPoints = result.data.user.points;
+                        this.redeemedVouchers++;
+                        
+                        // Lưu vào localStorage để backup
+                        localStorage.setItem('recyclehub_points', this.currentPoints);
+                        localStorage.setItem('recyclehub_vouchers', this.redeemedVouchers);
+                        
+                        this.closeRedeemModal();
+                        this.updatePointsDisplay();
+                        
+                        // Hiển thị thông báo với mã voucher
+                        this.showAlert(
+                            `Đổi voucher ${this.currentRedemption.name} thành công! Mã voucher: ${result.data.voucherCode}`, 
+                            'success'
+                        );
+                        
+                        this.currentRedemption = null;
+                    }
+                } catch (error) {
+                    console.error('Error redeeming voucher:', error);
+                    this.showAlert(`Lỗi: ${error.message}`, 'error');
+                }
+            }
+
+            closeRedeemModal() {
+                document.getElementById('redeemModal').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            updatePointsDisplay() {
+                // Update main points display
+                const currentPointsElement = document.getElementById('currentPoints');
+                if (currentPointsElement) {
+                    currentPointsElement.textContent = `${this.currentPoints} điểm`;
+                }
+
+                // Update dashboard
+                const dashboardPoints = document.getElementById('dashboardPoints');
+                const dashboardWaste = document.getElementById('dashboardWaste');
+                const dashboardVouchers = document.getElementById('dashboardVouchers');
+                
+                if (dashboardPoints) dashboardPoints.textContent = this.currentPoints;
+                if (dashboardWaste) dashboardWaste.textContent = this.totalWaste;
+                if (dashboardVouchers) dashboardVouchers.textContent = this.redeemedVouchers;
+
+                // Update voucher buttons
+                document.querySelectorAll('.redeem-btn').forEach(btn => {
+                    const card = btn.closest('.voucher-card');
+                    const requiredPoints = parseInt(card.dataset.points);
+                    btn.disabled = this.currentPoints < requiredPoints;
+                });
+            }
+
+            updateCheckinStats() {
+                // Get check-in streak and total check-ins
+                const checkinStreak = parseInt(localStorage.getItem('recyclehub_checkin_streak')) || 0;
+                const totalCheckins = parseInt(localStorage.getItem('recyclehub_total_checkins')) || 0;
+                
+                // Update streak
+                const today = new Date().toDateString();
+                const lastCheckin = localStorage.getItem('recyclehub_last_checkin');
+                
+                if (lastCheckin === today) {
+                    // Calculate streak
+                    const yesterday = new Date();
+                    yesterday.setDate(yesterday.getDate() - 1);
+                    const yesterdayStr = yesterday.toDateString();
+                    
+                    if (lastCheckin === yesterdayStr) {
+                        // Consecutive day
+                        const newStreak = checkinStreak + 1;
+                        localStorage.setItem('recyclehub_checkin_streak', newStreak);
+                    } else {
+                        // New streak
+                        localStorage.setItem('recyclehub_checkin_streak', '1');
+                    }
+                    
+                    // Update total check-ins
+                    localStorage.setItem('recyclehub_total_checkins', (totalCheckins + 1).toString());
+                }
+            }
+
+            updateCheckinUI() {
+                const today = new Date().toDateString();
+                const lastCheckin = localStorage.getItem('recyclehub_last_checkin');
+                const isCheckedIn = lastCheckin === today;
+                
+                // Update status
+                const checkinIcon = document.getElementById('checkinIcon');
+                const checkinTitle = document.getElementById('checkinTitle');
+                const checkinDesc = document.getElementById('checkinDesc');
+                const checkinBtn = document.getElementById('dailyCheckinBtn');
+                const statusIcon = document.querySelector('.status-icon');
+                
+                if (isCheckedIn) {
+                    if (checkinIcon) checkinIcon.className = 'fas fa-check-circle';
+                    if (checkinTitle) checkinTitle.textContent = 'Đã điểm danh';
+                    if (checkinDesc) checkinDesc.textContent = 'Tuyệt vời! Bạn đã nhận được điểm thưởng!';
+                    if (checkinBtn) {
+                        checkinBtn.textContent = 'Đã điểm danh';
+                        checkinBtn.classList.add('checked');
+                        checkinBtn.disabled = true;
+                    }
+                    if (statusIcon) statusIcon.classList.add('checked');
+                } else {
+                    if (checkinIcon) checkinIcon.className = 'fas fa-clock';
+                    if (checkinTitle) checkinTitle.textContent = 'Chưa điểm danh';
+                    if (checkinDesc) checkinDesc.textContent = 'Điểm danh để nhận điểm thưởng!';
+                    if (checkinBtn) {
+                        checkinBtn.innerHTML = '<i class="fas fa-hand-paper"></i><span>Điểm danh ngay</span>';
+                        checkinBtn.classList.remove('checked');
+                        checkinBtn.disabled = false;
+                    }
+                    if (statusIcon) statusIcon.classList.remove('checked');
+                }
+                
+                // Update stats
+                const checkinStreak = document.getElementById('checkinStreak');
+                const totalCheckins = document.getElementById('totalCheckins');
+                
+                if (checkinStreak) {
+                    const streak = parseInt(localStorage.getItem('recyclehub_checkin_streak')) || 0;
+                    checkinStreak.textContent = streak;
+                }
+                
+                if (totalCheckins) {
+                    const total = parseInt(localStorage.getItem('recyclehub_total_checkins')) || 0;
+                    totalCheckins.textContent = total;
+                }
+                
+            }
+
+
+            checkDailyCheckIn() {
+                const today = new Date().toDateString();
+                if (this.lastCheckIn !== today) {
+                    // Show check-in reminder
+                    setTimeout(() => {
+                        this.showAlert('Đừng quên điểm danh hôm nay để nhận điểm thưởng!', 'info');
+                    }, 2000);
+                }
+            }
+
+            showAlert(message, type = 'info') {
+                // Create alert element
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.innerHTML = `
+                    <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+                    <span>${message}</span>
+                `;
+
+                // Add styles
+                alert.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${type === 'success' ? '#d4edda' : type === 'error' ? '#f8d7da' : '#d1ecf1'};
+                    color: ${type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#0c5460'};
+                    border: 1px solid ${type === 'success' ? '#c3e6cb' : type === 'error' ? '#f5c6cb' : '#bee5eb'};
+                    border-radius: 8px;
+                    padding: 1rem 1.5rem;
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    z-index: 10000;
+                    animation: slideInRight 0.3s ease;
+                `;
+
+                document.body.appendChild(alert);
+
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    alert.style.animation = 'slideOutRight 0.3s ease';
+                    setTimeout(() => alert.remove(), 300);
+                }, 5000);
+            }
+        }
+
+        // Global functions for voucher redemption
+        function redeemVoucher(points, value, name) {
+            if (window.pointsSystem) {
+                const descriptions = {
+                    'Voucher 50.000đ': 'Voucher mua sắm tại cửa hàng đối tác',
+                    'Voucher TMĐT 100.000đ': 'Voucher mua hàng thương mại điện tử',
+                    'Voucher 200.000đ': 'Voucher thương hiệu cao cấp',
+                    'Voucher 500.000đ': 'Voucher VIP cho khách hàng thân thiết',
+                    'Voucher Cafe 10.000đ': 'Voucher mua cafe tại chuỗi đối tác',
+                    'Voucher Ăn uống 30.000đ': 'Voucher nhà hàng và quán ăn'
+                };
+                
+                const icons = {
+                    'Voucher 50.000đ': 'fas fa-ticket-alt',
+                    'Voucher TMĐT 100.000đ': 'fas fa-shopping-cart',
+                    'Voucher 200.000đ': 'fas fa-crown',
+                    'Voucher 500.000đ': 'fas fa-gem',
+                    'Voucher Cafe 10.000đ': 'fas fa-coffee',
+                    'Voucher Ăn uống 30.000đ': 'fas fa-utensils'
+                };
+                
+                window.pointsSystem.redeemVoucher(
+                    points, 
+                    value, 
+                    name, 
+                    descriptions[name] || 'Voucher mua sắm',
+                    icons[name] || 'fas fa-ticket-alt'
+                );
+            }
+        }
+
+        function closeRedeemModal() {
+            if (window.pointsSystem) {
+                window.pointsSystem.closeRedeemModal();
+            }
+        }
+
+        function closeAddWasteModal() {
+            if (window.pointsSystem) {
+                window.pointsSystem.closeAddWasteModal();
+            }
+        }
+
+        // Initialize auth system when DOM is ready
+        let auth;
+        let pointsSystem;
+        
+        document.addEventListener('DOMContentLoaded', async () => {
+            auth = new AuthSystem();
+            window.auth = auth; // Make it globally accessible
+            pointsSystem = new PointsSystem();
+            window.pointsSystem = pointsSystem; // Make it globally accessible
+            
+            // Test CORS connection on page load
+            try {
+                console.log('Testing CORS connection...');
+                const corsTest = await window.RecycleHubAPI.testCorsConnection();
+                if (corsTest.success) {
+                    console.log('✅ CORS connection successful');
+                } else {
+                    console.error('❌ CORS connection failed:', corsTest.error);
+                    // Show user-friendly error message
+                    const alertDiv = document.createElement('div');
+                    alertDiv.className = 'alert alert-error';
+                    alertDiv.style.cssText = `
+                        position: fixed;
+                        top: 20px;
+                        right: 20px;
+                        background: #f8d7da;
+                        color: #721c24;
+                        padding: 15px 20px;
+                        border-radius: 8px;
+                        border: 1px solid #f5c6cb;
+                        z-index: 10000;
+                        max-width: 400px;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+                    `;
+                    alertDiv.innerHTML = `
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>Cảnh báo: Không thể kết nối đến server. Vui lòng kiểm tra kết nối mạng hoặc thử lại sau.</span>
+                    `;
+                    document.body.appendChild(alertDiv);
+                    
+                    // Auto remove after 10 seconds
+                    setTimeout(() => {
+                        if (alertDiv.parentNode) {
+                            alertDiv.parentNode.removeChild(alertDiv);
+                        }
+                    }, 10000);
+                }
+            } catch (error) {
+                console.error('CORS test error:', error);
+            }
+        });
+
+        // Fallback for immediate execution
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', async () => {
+                if (!auth) {
+                    auth = new AuthSystem();
+                    window.auth = auth; // Make it globally accessible
+                }
+            });
+        } else {
+            auth = new AuthSystem();
+            window.auth = auth; // Make it globally accessible
+        }
+
+        // Direct form event binding as fallback
+        document.addEventListener('DOMContentLoaded', () => {
+            // Direct form submission handlers
+            const registerForm = document.getElementById('registerForm');
+            const loginForm = document.getElementById('loginForm');
+            
+            if (registerForm && !registerForm.hasAttribute('data-bound')) {
+                registerForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    console.log('Register form submitted directly');
+                    if (auth) {
+                        auth.handleRegister(e);
+                    }
+                });
+                registerForm.setAttribute('data-bound', 'true');
+            }
+            
+            if (loginForm && !loginForm.hasAttribute('data-bound')) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    console.log('Login form submitted directly');
+                    if (auth) {
+                        auth.handleLogin(e);
+                    }
+                });
+                loginForm.setAttribute('data-bound', 'true');
+            }
+        });
+
+        // Add loading animation to cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Add ripple effect to buttons
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const ripple = document.createElement('span');
+            const rect = button.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = x + 'px';
+            ripple.style.top = y + 'px';
+            ripple.classList.add('ripple');
+            
+            button.appendChild(ripple);
+            
+            setTimeout(() => {
+                ripple.remove();
+            }, 600);
+        }
+
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', createRipple);
+        });
+
+        // Add CSS for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            button {
+                position: relative;
+                overflow: hidden;
+            }
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.3);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+                pointer-events: none;
+            }
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+
+</body>
+
+</html>
